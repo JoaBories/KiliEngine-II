@@ -49,7 +49,7 @@ struct Vector4
         }
     }
     
-    [[nodiscard]] std::string asString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y) + " , z: " + std::to_string(z) + " , w: " + std::to_string(w); }
+    [[nodiscard]] std::string toString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y) + " , z: " + std::to_string(z) + " , w: " + std::to_string(w); }
     
     Vector4 operator+(const Vector4& rhs) const { return Vector4(x + rhs.x, y + rhs.y, z + rhs.z, w + rhs.w); }
     Vector4 operator-(const Vector4& rhs) const { return Vector4(x - rhs.x, y - rhs.y, z - rhs.z, w - rhs.w); }

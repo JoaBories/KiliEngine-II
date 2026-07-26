@@ -43,7 +43,7 @@ struct Vector2
         }
     }
     
-    [[nodiscard]] std::string asString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y); }
+    [[nodiscard]] std::string toString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y); }
     
     Vector2 operator+(const Vector2& rhs) const { return Vector2(x + rhs.x, y + rhs.y); }
     Vector2 operator-(const Vector2& rhs) const { return Vector2(x - rhs.x, y - rhs.y); }

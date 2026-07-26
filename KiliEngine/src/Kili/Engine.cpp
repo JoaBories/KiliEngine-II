@@ -1,6 +1,8 @@
 ﻿#include "klpch.h"
 #include "Engine.h"
 
+#include "Events/InputEvent.h"
+
 namespace Kili
 {
     Engine::Engine()
@@ -15,14 +17,16 @@ namespace Kili
 
     void Engine::run()
     {
-        LOG_INFO("KiliEngine initialization");
+        LOG_LOADING("KiliEngine Initialization");
         
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
-        else LOG_INFO("SDL VIDEO initialized");
+        else LOG_LOADING("SDL VIDEO initialized");
         
         Uint32 windowFlags = SDL_WINDOW_OPENGL;
         
         auto SdlWindow = SDL_CreateWindow("My Game", 800, 800, windowFlags);
+        
+        LOG_LOADING("KiliEngine Initialized");
         
         bool isRunning = true;
         
@@ -38,6 +42,7 @@ namespace Kili
                         break;
                 }
             }
+
         }
         
         SDL_DestroyWindow(SdlWindow);

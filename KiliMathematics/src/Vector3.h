@@ -46,7 +46,7 @@ struct Vector3
         }
     }
     
-    [[nodiscard]] std::string asString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y) + " , z: " + std::to_string(z); }
+    [[nodiscard]] std::string toString() const { return "x : " + std::to_string(x) + " , y: " + std::to_string(y) + " , z: " + std::to_string(z); }
     
     Vector3 operator+(const Vector3& rhs) const { return Vector3(x + rhs.x, y + rhs.y, z + rhs.z); }
     Vector3 operator-(const Vector3& rhs) const { return Vector3(x - rhs.x, y - rhs.y, z - rhs.z); }
