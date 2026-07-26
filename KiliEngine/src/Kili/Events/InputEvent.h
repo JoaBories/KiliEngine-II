@@ -89,21 +89,21 @@ namespace Kili
     class MouseWheelInputEvent : public InputEvent
     {
     protected:
-        Vector2 mMouseScroll;
+        float mMouseScrollX, mMouseScrollY;
         Vector2 mMousePos;
         bool mFlipped;
         
     public:
-        MouseWheelInputEvent(const Vector2 mouseScroll, const Vector2 mousePos, const bool flipped) : 
-            mMouseScroll(mouseScroll), mMousePos(mousePos), mFlipped(flipped) {}
+        MouseWheelInputEvent(const float mouseScrollX, const float mouseScrollY, const Vector2 mousePos, const bool flipped) : 
+            mMouseScrollX(mouseScrollX), mMouseScrollY(mouseScrollY), mMousePos(mousePos), mFlipped(flipped) {}
         
         [[nodiscard]] const char* getName() const override { return "Mouse wheel input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
         [[nodiscard]] InputType getInputType() const override { return InputType::MouseWheel; }
         
-        /** Mouse scroll, x horizontal (right positive) and y vertical (away from the user positive).*/
-        [[nodiscard]] Vector2 getMouseScroll() const { return mMouseScroll; }
+        [[nodiscard]] float getMouseScrollX() const { return mMouseScrollX; } /* Right positive, left negative. */
+        [[nodiscard]] float getMouseScrollY() const { return mMouseScrollY; } /* Away from the user positive, toward the user negative. */
         [[nodiscard]] Vector2 getMousePos() const { return mMousePos; }
         [[nodiscard]] bool isFlipped() const { return mFlipped; }
     };

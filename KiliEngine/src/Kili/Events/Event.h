@@ -11,8 +11,7 @@ namespace Kili
         WindowClose, 
         WindowResize, 
         WindowFocus, 
-        WindowLostFocus, 
-        WindowMoved,
+        WindowLostFocus,
         
         Input
     };
@@ -30,7 +29,6 @@ namespace Kili
     class Event
     {
         friend class EventDispatcher;
-        friend class Engine;
         
     protected:
         bool mHandled = false;
@@ -39,8 +37,7 @@ namespace Kili
         [[nodiscard]] virtual EventType getType() const = 0;
         [[nodiscard]] virtual const char* getName() const = 0;
         [[nodiscard]] virtual int getCategoryFlags() const = 0;
-
-        [[nodiscard]] virtual std::string toString() const { return getName();}
+        
         [[nodiscard]] bool isInCategory(const EventCategory category) const { return getCategoryFlags() & category; }
     };
     
