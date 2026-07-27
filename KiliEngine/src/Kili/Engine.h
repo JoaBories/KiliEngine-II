@@ -8,6 +8,9 @@ namespace Kili
     {
     private:
         ConsoleLogger* mConsoleLogger;
+        bool mIsRunning;
+        
+        void receiveSdlLog();
         
     public:
         Engine();

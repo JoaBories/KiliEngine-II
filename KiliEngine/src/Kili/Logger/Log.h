@@ -13,6 +13,7 @@ namespace Kili
     enum class LogLevel : std::uint8_t
     {
         None = 0,
+        Event,
         Debug,
         Info,
         Loading,
@@ -25,6 +26,7 @@ namespace Kili
         switch (e)
         {
             case LogLevel::None: return "None";
+            case LogLevel::Event: return "Event";
             case LogLevel::Debug: return "Debug";
             case LogLevel::Info: return "Info";
             case LogLevel::Loading: return "Loading";
