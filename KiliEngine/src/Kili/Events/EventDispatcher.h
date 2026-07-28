@@ -20,7 +20,10 @@ namespace Kili
     {
     private:
         std::unordered_map<EventCategory, std::vector<IEventListener*>> mListeners;
+        
+        // DIST to remove for distribution
         bool mLogging;
+        int mCategoryFilter;
         
         EventDispatcher() = default;
         ~EventDispatcher() { mListeners.clear(); }
@@ -40,6 +43,8 @@ namespace Kili
         
         void receiveEvent(const Event& event);
         
+        // DIST to remove for distribution
         void setLoggingEvent(const bool logging) { mLogging = logging; }
+        void setCategoryFilter(const int categoryFilter) { mCategoryFilter = categoryFilter; } /* Prevent for logging event from these categories */
     };
 } 

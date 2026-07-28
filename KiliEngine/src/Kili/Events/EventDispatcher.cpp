@@ -54,5 +54,10 @@ void Kili::EventDispatcher::receiveEvent(const Event& event)
         }
     }
     
-    if (mLogging) LOG_DEBUG(event.toString());
+    // DIST to remove for distribution
+    if (mLogging)
+    {
+        if (event.getCategoryFlags() & mCategoryFilter) return;
+        LOG_DEBUG(event.toString());
+    }
 }

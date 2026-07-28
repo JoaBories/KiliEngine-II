@@ -8,10 +8,9 @@ namespace Kili
     {
         None = 0,
         
-        WindowClose, 
-        WindowResize, 
-        WindowFocus, 
-        WindowLostFocus,
+        WindowClose,
+        WindowResize,
+        WindowFocus,
         
         Input
     };

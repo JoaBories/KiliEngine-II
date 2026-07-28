@@ -37,6 +37,11 @@ namespace Kili
         [[nodiscard]] const char* getName() const override { return "Key input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventKeyboard; }
         
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Key input event : " + std::to_string(mKey) + (mDown ? " Down" : " Up");
+        }
+        
         [[nodiscard]] InputType getInputType() const override { return InputType::Keyboard; }
         
         [[nodiscard]] SDL_Keycode getKey() const { return mKey; }
@@ -57,6 +62,11 @@ namespace Kili
         
         [[nodiscard]] const char* getName() const override { return "Mouse button input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
+        
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Mouse button input event : " + std::to_string(mButton) + (mDown ? " Down" : " Up") + " at " + mMousePos.toString() + " / " + std::to_string(mClicks);
+        }
         
         [[nodiscard]] InputType getInputType() const override { return InputType::MouseButton; }
         
@@ -80,6 +90,11 @@ namespace Kili
         [[nodiscard]] const char* getName() const override { return "Mouse movement input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Mouse move input event : " + mMousePos.toString() + " / " + mMouseMove.toString();
+        }
+        
         [[nodiscard]] InputType getInputType() const override { return InputType::MouseMove; }
         
         [[nodiscard]] Vector2 getMousePos() const { return mMousePos; }
@@ -100,6 +115,11 @@ namespace Kili
         [[nodiscard]] const char* getName() const override { return "Mouse wheel input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Mouse wheel input event : x : " + std::to_string(mMouseScrollX) + " y : " + std::to_string(mMouseScrollY) + " / " + mMousePos.toString();
+        }
+        
         [[nodiscard]] InputType getInputType() const override { return InputType::MouseWheel; }
         
         [[nodiscard]] float getMouseScrollX() const { return mMouseScrollX; } /* Right positive, left negative. */
@@ -115,11 +135,16 @@ namespace Kili
         bool mDown;
         
     public:
-        GamepadButtonInputEvent(const SDL_GamepadButton button, const bool down) : 
-            mGamepadButton(button), mDown(down) {}
+        GamepadButtonInputEvent(const Uint8 button, const bool down) : 
+            mGamepadButton(static_cast<SDL_GamepadButton>(button)), mDown(down) {}
         
         [[nodiscard]] const char* getName() const override { return "Gamepad button input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventGamepad; }
+        
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Gamepad button input event : " + std::to_string(mGamepadButton) + " / " + (mDown ? " Down" : " Up");
+        }
         
         [[nodiscard]] InputType getInputType() const override { return InputType::GamepadButton; }
         
@@ -134,16 +159,22 @@ namespace Kili
         Sint16 mGamepadAxisValue;
         
     public:
-        GamepadAxisInputEvent(const SDL_GamepadAxis axis, const Sint16 axisValue) : 
-            mGamepadAxis(axis), mGamepadAxisValue(axisValue) {}
+        GamepadAxisInputEvent(const Uint8 axis, const Sint16 axisValue) : 
+            mGamepadAxis(static_cast<SDL_GamepadAxis>(axis)), mGamepadAxisValue(axisValue) {}
         
         [[nodiscard]] const char* getName() const override { return "Gamepad axis input event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventGamepad; }
+        
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Gamepad axis input event : " + std::to_string(mGamepadAxis) + " / " + std::to_string(getGamepadAxisValueNormalized());
+        }
         
         [[nodiscard]] InputType getInputType() const override { return InputType::GamepadAxis; }
         
         [[nodiscard]] SDL_GamepadAxis getGamepadAxis() const { return mGamepadAxis; }
         /** Scaling from -32768 to 32768. (IDK this is a SDL3 thing)*/
         [[nodiscard]] Sint16 getGamepadAxisValue() const { return mGamepadAxisValue; }
+        [[nodiscard]] float getGamepadAxisValueNormalized() const { return static_cast<float>(mGamepadAxisValue) / 32768.0f; }
     };
 }

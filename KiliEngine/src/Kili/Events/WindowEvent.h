@@ -27,27 +27,33 @@ namespace Kili
         [[nodiscard]] const char* getName() const override { return "Window resize event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
         
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Window resize event : x : " + std::to_string(mWidth) + " y : " + std::to_string(mHeight);
+        }
+        
         [[nodiscard]] unsigned int getWidth() const { return mWidth; }
         [[nodiscard]] unsigned int getHeight() const { return mHeight; }
     };
     
-    class WindowFocusEvent : public Event
+    class WindowFocusUpdateEvent : public Event
     {
+    protected:
+        bool mGained;
+        
     public:
-        WindowFocusEvent() = default;
+        explicit WindowFocusUpdateEvent(const bool gained) :
+            mGained(gained) {}
         
         [[nodiscard]] EventType getType() const override { return EventType::WindowFocus; }
         [[nodiscard]] const char* getName() const override { return "Window focus event"; }
         [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
-    };
-    
-    class WindowLostFocusEvent : public Event
-    {
-    public:
-        WindowLostFocusEvent() = default;
         
-        [[nodiscard]] EventType getType() const override { return EventType::WindowLostFocus; }
-        [[nodiscard]] const char* getName() const override { return "Window lost focus event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        [[nodiscard]] std::string toString() const override
+        {
+            return "Window focus event : " + std::string(mGained ? "Gained" : "Lost");
+        }
+        
+        [[nodiscard]] bool isGained() const { return mGained; }
     };
 }
