@@ -69,7 +69,9 @@ namespace Kili
         }
     }
     
-    Engine::Engine()
+    Engine::Engine() :
+        mConsoleLogger(nullptr),
+        mIsRunning(false)
     {
         mConsoleLogger = new ConsoleLogger();
         EventDispatcher::instance().setLoggingEvent(true);
@@ -87,6 +89,9 @@ namespace Kili
         
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
         else LOG_LOADING("SDL VIDEO initialized");
+        
+        if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");
+        else LOG_LOADING("SDL GAMEPAD initialized");
 
         constexpr Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
