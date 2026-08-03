@@ -32,12 +32,9 @@ project (mathlib)
         (mathlib .. "/src")
     }
 
-    filter "system:windows"
-        cppdialect "c++17"
-        staticruntime "On"
-        systemversion "latest"
-
-        defines "KL_PLATFORM_WINDOWS"
+    cppdialect "c++17"
+    staticruntime "On"
+    systemversion "latest"
 
     filter "configurations:Debug"
         defines "KL_DEBUG"
@@ -84,12 +81,9 @@ project (engine)
         "SDL3"
     }
 
-    filter "system:windows"
-        cppdialect "c++17"
-        staticruntime "On"
-        systemversion "latest"
-
-        defines "KL_PLATFORM_WINDOWS"
+    cppdialect "c++17"
+    staticruntime "On"
+    systemversion "latest"
 
     filter "configurations:Debug"
         defines "KL_DEBUG"
@@ -133,16 +127,13 @@ project (runtime)
         "Sdl3"
     }
 
-    postbuildcommands {
+    postbuildcommands { -- Used for copying SDL3 dll onto the exe folder 
         "{COPYFILE} %[vendor/Sdl3/SDL3.dll] %[%{!cfg.targetdir}]"
     }
 
-    filter "system:windows"
-        cppdialect "c++17"
-        staticruntime "On"
-        systemversion "latest"
-
-        defines "KL_PLATFORM_WINDOWS"
+    cppdialect "c++17"
+    staticruntime "On"
+    systemversion "latest"
 
     filter "configurations:Debug"
         defines "KL_DEBUG"

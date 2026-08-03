@@ -11,7 +11,7 @@ namespace Kili
         
         [[nodiscard]] EventType getType() const override { return EventType::WindowClose; }
         [[nodiscard]] const char* getName() const override { return "Window close event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        [[nodiscard]] char getCategoryFlags() const override { return EventWindow;}
     };
     
     class WindowResizeEvent : public Event
@@ -25,7 +25,7 @@ namespace Kili
         
         [[nodiscard]] EventType getType() const override { return EventType::WindowResize; }
         [[nodiscard]] const char* getName() const override { return "Window resize event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        [[nodiscard]] char getCategoryFlags() const override { return EventWindow;}
         
         [[nodiscard]] std::string toString() const override
         {
@@ -47,7 +47,7 @@ namespace Kili
         
         [[nodiscard]] EventType getType() const override { return EventType::WindowFocus; }
         [[nodiscard]] const char* getName() const override { return "Window focus event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        [[nodiscard]] char getCategoryFlags() const override { return EventWindow;}
         
         [[nodiscard]] std::string toString() const override
         {

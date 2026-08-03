@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core.h"
+
 #pragma region Std_Includes
 
 #include <utility>
@@ -39,7 +41,3 @@
 #include "Matrix4.h"
 
 #pragma endregion
-
-#ifdef KL_PLATFORM_WINDOWS
-    #include <Windows.h>
-#endif

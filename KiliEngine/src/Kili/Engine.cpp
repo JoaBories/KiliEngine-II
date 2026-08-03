@@ -75,7 +75,7 @@ namespace Kili
     {
         mConsoleLogger = new ConsoleLogger();
         EventDispatcher::instance().setLoggingEvent(true);
-        EventDispatcher::instance().setCategoryFilter(EventMouse | EventKeyboard);
+        EventDispatcher::instance().setCategoryFilter(EventInput);
     }
 
     Engine::~Engine()
@@ -93,9 +93,8 @@ namespace Kili
         if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");
         else LOG_LOADING("SDL GAMEPAD initialized");
 
-        constexpr Uint32 windowFlags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
-
-        const auto sdlWindow = SDL_CreateWindow("My Game", 100, 100, windowFlags);
+        const WindowParameters winParams = {300,300, WindowResizable, false};
+        mWindow = new Window("Hello World", winParams);
         
         LOG_LOADING("KiliEngine Initialized");
         
@@ -106,7 +105,7 @@ namespace Kili
             receiveSdlLog();
         }
         
-        SDL_DestroyWindow(sdlWindow);
+        delete mWindow;
         
         LOG_INFO("KiliEngine Ended");
     }

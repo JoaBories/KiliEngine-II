@@ -8,9 +8,9 @@ namespace Kili
         friend class EventDispatcher;
         
     protected:
-        int mCategoryFilter;
+        char mCategoryFilter;
 
-        explicit IEventListener(int categoryFilter);
+        explicit IEventListener(char categoryFilter);
         ~IEventListener();
         
         virtual void onEvent(const Event& event) = 0;
@@ -19,11 +19,11 @@ namespace Kili
     class EventDispatcher
     {
     private:
-        std::unordered_map<EventCategory, std::vector<IEventListener*>> mListeners;
+        std::vector<IEventListener*> mListeners;
         
         // DIST to remove for distribution
         bool mLogging;
-        int mCategoryFilter;
+        char mCategoryFilter; /* Prevent for logging event from these categories */
         
         EventDispatcher() = default;
         ~EventDispatcher() { mListeners.clear(); }
@@ -41,10 +41,10 @@ namespace Kili
         void addListener(IEventListener* listener);
         void removeListener(const IEventListener* listener);
         
-        void receiveEvent(const Event& event);
+        void receiveEvent(const Event& event) const;
         
         // DIST to remove for distribution
         void setLoggingEvent(const bool logging) { mLogging = logging; }
-        void setCategoryFilter(const int categoryFilter) { mCategoryFilter = categoryFilter; } /* Prevent for logging event from these categories */
+        void setCategoryFilter(const char categoryFilter) { mCategoryFilter = categoryFilter; } /* Prevent for logging event from these categories */
     };
 } 

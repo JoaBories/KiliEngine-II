@@ -4,7 +4,7 @@
 
 namespace Kili
 {
-    enum class EventType
+    enum class EventType : char
     {
         None = 0,
         
@@ -15,7 +15,7 @@ namespace Kili
         Input
     };
     
-    enum EventCategory
+    enum EventCategory : char
     {
         EventNone = 0,
         EventWindow     = 1 << 0,
@@ -24,19 +24,21 @@ namespace Kili
         EventMouse      = 1 << 3,
         EventGamepad    = 1 << 4,
     };
-
-    constexpr EventCategory AllCategories[] = {EventWindow, EventInput, EventKeyboard, EventMouse, EventGamepad};
     
     class Event
     {
     public:
         [[nodiscard]] virtual EventType getType() const = 0;
         [[nodiscard]] virtual const char* getName() const = 0;
-        [[nodiscard]] virtual int getCategoryFlags() const = 0;
+        [[nodiscard]] virtual char getCategoryFlags() const = 0;
         
+        /** Used for Debug and logging **/
         [[nodiscard]] virtual std::string toString() const { return getName(); }
         
-        [[nodiscard]] bool isInCategory(const EventCategory category) const { return getCategoryFlags() & category; }
+        /** Return true if the category is present. **/
+        [[nodiscard]] bool hasCategory(const EventCategory category) const { return getCategoryFlags() & category; }
+        /** Return true if at least one category is present. **/
+        [[nodiscard]] bool hasCategories(const char categories) const { return (getCategoryFlags() & categories) != 0; }
     };
     
 }

@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "Window.h"
 #include "Logger/ConsoleLogger.h"
 
 namespace Kili
@@ -8,6 +9,7 @@ namespace Kili
     {
     private:
         ConsoleLogger* mConsoleLogger;
+        Window* mWindow;
         bool mIsRunning;
         
         void receiveSdlLog();
