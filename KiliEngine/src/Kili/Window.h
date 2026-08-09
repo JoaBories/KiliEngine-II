@@ -43,6 +43,8 @@ namespace Kili
         
         Window(const Window&) = delete;
         Window& operator=(const Window&) = delete;
+        Window(Window&&) = delete;
+        Window& operator=(Window&&) = delete;
         
         [[nodiscard]] SDL_Window* getWindow() const { return mWindow; }
         

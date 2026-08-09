@@ -1,3 +1,12 @@
+-- Premake file for KiliEngine2
+
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+-- Names
+local mathlib = "KiliMathematics"
+local engine = "KiliEngine"
+local runtime = "Runtime"
+
 workspace "KiliEngine2"
     architecture "x64"
 
@@ -7,12 +16,7 @@ workspace "KiliEngine2"
         "Build"
     }
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-
--- Names
-local mathlib = "KiliMathematics"
-local engine = "KiliEngine"
-local runtime = "Runtime"
+    debugdir "%{wks.location}"
 
 -- =========== Math lib
 project (mathlib)

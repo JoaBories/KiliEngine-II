@@ -4,6 +4,7 @@
 #include "Events/EventDispatcher.h"
 #include "Events/InputEvent.h"
 #include "Events/WindowEvent.h"
+#include "FileReadWrite/ConfigINI.h"
 
 namespace Kili
 {
@@ -92,6 +93,8 @@ namespace Kili
         
         if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");
         else LOG_LOADING("SDL GAMEPAD initialized");
+        
+        ConfigINI config = ConfigINI::readFile("KiliEngine.ini", "Kili", true);
 
         const WindowParameters winParams = {300,300, WindowResizable, false};
         mWindow = new Window("Hello World", winParams);
