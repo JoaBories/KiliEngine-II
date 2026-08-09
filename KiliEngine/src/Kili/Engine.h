@@ -12,7 +12,7 @@ namespace Kili
         Window* mWindow;
         bool mIsRunning;
         
-        void receiveSdlLog();
+        void receiveSdlEvents();
         
     public:
         Engine();

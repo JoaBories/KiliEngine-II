@@ -1,14 +1,14 @@
 ﻿#include "klpch.h"
 #include "Engine.h"
 
+#include "EngineConfig.h"
 #include "Events/EventDispatcher.h"
 #include "Events/InputEvent.h"
 #include "Events/WindowEvent.h"
-#include "FileReadWrite/ConfigINI.h"
 
 namespace Kili
 {
-    void Engine::receiveSdlLog()
+    void Engine::receiveSdlEvents()
     {
         SDL_Event event;
         while (SDL_PollEvent(&event))
@@ -74,9 +74,6 @@ namespace Kili
         mConsoleLogger(nullptr),
         mIsRunning(false)
     {
-        mConsoleLogger = new ConsoleLogger();
-        EventDispatcher::instance().setLoggingEvent(true);
-        EventDispatcher::instance().setCategoryFilter(EventInput);
     }
 
     Engine::~Engine()
@@ -86,7 +83,17 @@ namespace Kili
 
     void Engine::run()
     {
+        Log::instance(); // Ensure a first initialization of the log
+        mConsoleLogger = new ConsoleLogger();
+        
         LOG_LOADING("KiliEngine Initialization");
+        
+        const EngineConfig* config = EngineConfig::initInstance("KiliEngine.ini");
+        
+        LOG_LOADING("Config loaded");
+        
+        EventDispatcher::instance().setLoggingEvent(config->isEventLogging());
+        EventDispatcher::instance().setCategoryFilter(EventInput);
         
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
         else LOG_LOADING("SDL VIDEO initialized");
@@ -94,10 +101,8 @@ namespace Kili
         if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");
         else LOG_LOADING("SDL GAMEPAD initialized");
         
-        ConfigINI config = ConfigINI::readFile("KiliEngine.ini", "Kili", true);
-
-        const WindowParameters winParams = {300,300, WindowResizable, false};
-        mWindow = new Window("Hello World", winParams);
+        const WindowParameters winParams{ config->getWindowInitialWidth(), config->getWindowInitialHeight(), config->getWindowFlags(), config->isInitialVsync()};
+        mWindow = new Window(config->getWindowName(), winParams);
         
         LOG_LOADING("KiliEngine Initialized");
         
@@ -105,7 +110,7 @@ namespace Kili
         
         while (mIsRunning)
         {
-            receiveSdlLog();
+            receiveSdlEvents();
         }
         
         delete mWindow;
