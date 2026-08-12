@@ -13,7 +13,7 @@ namespace Kili
         explicit IEventListener(int categoryFilter);
         ~IEventListener();
         
-        virtual void onEvent(const Event& event) = 0;
+        virtual void onEvent(const IEvent& event) = 0;
     };
     
     class EventDispatcher
@@ -29,10 +29,10 @@ namespace Kili
         ~EventDispatcher() { mListeners.clear(); }
         
     public:
-        static EventDispatcher& instance()
+        static EventDispatcher* instance()
         {
             static EventDispatcher instance;
-            return instance;
+            return &instance;
         }
         
         EventDispatcher(const EventDispatcher&) = delete;
@@ -41,7 +41,8 @@ namespace Kili
         void addListener(IEventListener* listener);
         void removeListener(const IEventListener* listener);
         
-        void receiveEvent(const Event& event) const;
+        void pollSdlEvents() const;
+        void receiveEvent(const IEvent& event) const;
         
         // DIST to remove for distribution
         void setLoggingEvent(const bool logging) { mLogging = logging; }

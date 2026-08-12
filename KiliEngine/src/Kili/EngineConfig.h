@@ -1,5 +1,4 @@
 #pragma once
-#include "FileReadWrite/ConfigINI.h"
 
 namespace Kili
 {
@@ -7,7 +6,7 @@ namespace Kili
     {
         friend class Engine; // So only Engine can access Instance creation and deletion
         
-        static EngineConfig* Instance;
+        static EngineConfig* mInstance;
     
         // Window parameters
         std::string mWindowName;
@@ -29,12 +28,12 @@ namespace Kili
         explicit EngineConfig(const std::string& path);
         ~EngineConfig() = default;
         
-        static EngineConfig* initInstance(const std::string& configPath) { Instance = new EngineConfig(configPath); return Instance; }
-        static void closeInstance() { delete Instance; Instance = nullptr; }
+        static EngineConfig* initInstance(const std::string& configPath) { mInstance = new EngineConfig(configPath); return mInstance; }
+        static void closeInstance() { delete mInstance; mInstance = nullptr; }
         
     public:
         /** If it returns nullptr wait until engine initialize the instance */
-        static EngineConfig* getInstance() { return Instance; }
+        static EngineConfig* getInstance() { return mInstance; }
         
         [[nodiscard]] std::string getWindowName() const { return mWindowName; }
         [[nodiscard]] char getWindowFlags() const { return mWindowFlags; }

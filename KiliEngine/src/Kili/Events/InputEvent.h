@@ -16,7 +16,7 @@ namespace Kili
         GamepadAxis,
     };
     
-    class InputEvent : public Event
+    class InputEvent : public IEvent
     {
     public:
         [[nodiscard]] EventType getType() const override { return EventType::Input; }

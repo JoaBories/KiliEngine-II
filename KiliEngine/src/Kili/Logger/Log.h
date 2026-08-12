@@ -57,10 +57,10 @@ namespace Kili
         ~Log() { mLoggers.clear(); }
         
     public:
-        static Log& instance()
+        static Log* instance()
         {
             static Log instance;
-            return instance;
+            return &instance;
         }
         
         Log(const Log&) = delete;
@@ -73,15 +73,15 @@ namespace Kili
     };
 
 #ifndef KL_BUILD
-    #define LOG_DEBUG(msg) Log::instance().log(LogLevel::Debug, msg, __FILE__, __LINE__)
-    #define LOG_INFO(msg) Log::instance().log(LogLevel::Info, msg, __FILE__, __LINE__)
+    #define LOG_DEBUG(msg) Log::instance()->log(LogLevel::Debug, msg, __FILE__, __LINE__)
+    #define LOG_INFO(msg) Log::instance()->log(LogLevel::Info, msg, __FILE__, __LINE__)
 #else
     #define LOG_DEBUG(msg) void(0)
     #define LOG_INFO(msg) void(0)
 #endif
-    #define LOG_LOADING(msg) Log::instance().log(LogLevel::Loading, msg, __FILE__, __LINE__)
-    #define LOG_WARNING(msg) Log::instance().log(LogLevel::Warning, msg, __FILE__, __LINE__)
-    #define LOG_ERROR(msg) Log::instance().log(LogLevel::Error, msg, __FILE__, __LINE__)
+    #define LOG_LOADING(msg) Log::instance()->log(LogLevel::Loading, msg, __FILE__, __LINE__)
+    #define LOG_WARNING(msg) Log::instance()->log(LogLevel::Warning, msg, __FILE__, __LINE__)
+    #define LOG_ERROR(msg) Log::instance()->log(LogLevel::Error, msg, __FILE__, __LINE__)
     
 #define TEST_ALL_LOG LOG_DEBUG("Test Debug"); LOG_INFO("Test Info"); LOG_LOADING("Test Loading"); LOG_WARNING("Test Warning"); LOG_ERROR("Test Error");
 }

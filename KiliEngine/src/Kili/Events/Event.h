@@ -6,6 +6,8 @@ namespace Kili
 {
     enum class EventType : char
     {
+        AppClose,
+        
         WindowClose,
         WindowResize,
         WindowFocus,
@@ -13,16 +15,17 @@ namespace Kili
         Input
     };
     
-    enum EventCategory : char
+    enum EventCategory : int
     {
-        EventWindow     = 1 << 0,
-        EventInput      = 1 << 1,
-        EventKeyboard   = 1 << 2,
-        EventMouse      = 1 << 3,
-        EventGamepad    = 1 << 4,
+        EventApp        = 1 << 0,
+        EventWindow     = 1 << 1,
+        EventInput      = 1 << 2,
+        EventKeyboard   = 1 << 3,
+        EventMouse      = 1 << 4,
+        EventGamepad    = 1 << 5,
     };
     
-    class Event
+    class IEvent
     {
     public:
         [[nodiscard]] virtual EventType getType() const = 0;

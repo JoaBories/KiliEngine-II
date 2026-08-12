@@ -1,9 +1,11 @@
 #include "klpch.h"
 #include "EngineConfig.h"
+
 #include "Window.h"
+#include "FileReadWrite/ConfigINI.h"
 #include "Logger/Log.h"
 
-Kili::EngineConfig* Kili::EngineConfig::Instance = nullptr;
+Kili::EngineConfig* Kili::EngineConfig::mInstance = nullptr;
 
 Kili::EngineConfig::EngineConfig(const std::string& path)
 {

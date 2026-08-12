@@ -56,6 +56,6 @@ namespace Kili
         void setVsync(bool vsync);
 
     protected:
-        void onEvent(const Event& event) override;
+        void onEvent(const IEvent& event) override;
     };
 }

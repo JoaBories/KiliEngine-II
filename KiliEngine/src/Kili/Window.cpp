@@ -63,7 +63,7 @@ void Kili::Window::setVsync(const bool vsync)
     // ADDAPI
 }
 
-void Kili::Window::onEvent(const Event& event)
+void Kili::Window::onEvent(const IEvent& event)
 {
     if (event.getType() == EventType::WindowResize)
     {

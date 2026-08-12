@@ -4,7 +4,7 @@
 
 namespace Kili
 {
-    class WindowCloseEvent : public Event
+    class WindowCloseEvent : public IEvent
     {
     public:
         WindowCloseEvent() = default;
@@ -14,7 +14,7 @@ namespace Kili
         [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
     };
     
-    class WindowResizeEvent : public Event
+    class WindowResizeEvent : public IEvent
     {
     protected:
         unsigned int mWidth, mHeight;
@@ -36,7 +36,7 @@ namespace Kili
         [[nodiscard]] unsigned int getHeight() const { return mHeight; }
     };
     
-    class WindowFocusUpdateEvent : public Event
+    class WindowFocusUpdateEvent : public IEvent
     {
     protected:
         bool mGained;
