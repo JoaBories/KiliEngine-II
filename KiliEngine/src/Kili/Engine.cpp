@@ -72,6 +72,7 @@ namespace Kili
     
     Engine::Engine() :
         mConsoleLogger(nullptr),
+        mWindow(nullptr),
         mIsRunning(false)
     {
     }
@@ -89,11 +90,12 @@ namespace Kili
         LOG_LOADING("KiliEngine Initialization");
         
         const EngineConfig* config = EngineConfig::initInstance("KiliEngine.ini");
-        
         LOG_LOADING("Config loaded");
         
+        mConsoleLogger->setLogLevelMask(config->getConsoleLevelMask());
+        
         EventDispatcher::instance().setLoggingEvent(config->isEventLogging());
-        EventDispatcher::instance().setCategoryFilter(EventInput);
+        EventDispatcher::instance().setCategoryFilter(config->getEventLogMask());
         
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
         else LOG_LOADING("SDL VIDEO initialized");
@@ -108,13 +110,18 @@ namespace Kili
         
         mIsRunning = true;
         
+        TEST_ALL_LOG
+        
         while (mIsRunning)
         {
             receiveSdlEvents();
         }
         
+        EngineConfig::closeInstance();
         delete mWindow;
         
         LOG_INFO("KiliEngine Ended");
+        
+        delete mConsoleLogger;
     }
 }

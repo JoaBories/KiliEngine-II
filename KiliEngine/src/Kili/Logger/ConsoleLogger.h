@@ -7,12 +7,14 @@ namespace Kili
     class ConsoleLogger : public ILogger
     {
     private:
-        LogLevel mMinLevel;
+        int mLogLevelMask;
         
     public:
-        explicit ConsoleLogger(LogLevel minLevel = LogLevel::Debug);
+        /** Don't log levels passed in mask, use the enum LogLevel. \n Example: LogLevel::Debug | LogLevel::Info */
+        explicit ConsoleLogger();
         ~ConsoleLogger() override;
     
+        void setLogLevelMask(const int mask) { mLogLevelMask = mask; }
         void receiveLog(const LogMessage& message) override;
     
     };

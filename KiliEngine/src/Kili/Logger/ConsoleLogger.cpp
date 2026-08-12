@@ -3,7 +3,7 @@
 
 namespace Kili
 {
-    ConsoleLogger::ConsoleLogger(const LogLevel minLevel) : mMinLevel(minLevel)
+    ConsoleLogger::ConsoleLogger() : mLogLevelMask(0)
     {
         Log::instance().addLogger(this);
     }
@@ -15,8 +15,8 @@ namespace Kili
 
     void ConsoleLogger::receiveLog(const LogMessage& message)
     {
-        if (message.level < mMinLevel) return;
-        
+        if (mLogLevelMask & message.level) return;
+
         std::ostringstream log;
         
         log << "[" << toString(message.level) << "] ";

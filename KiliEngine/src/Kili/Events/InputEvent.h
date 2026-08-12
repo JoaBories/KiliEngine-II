@@ -35,7 +35,7 @@ namespace Kili
             mKey(keycode), mDown(down) {}
 
         [[nodiscard]] const char* getName() const override { return "Key input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventKeyboard; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventKeyboard; }
         
         [[nodiscard]] std::string toString() const override
         {
@@ -61,7 +61,7 @@ namespace Kili
             mButton(button), mDown(down), mMousePos(mousePos), mClicks(clicks) {}
         
         [[nodiscard]] const char* getName() const override { return "Mouse button input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventMouse; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
         [[nodiscard]] std::string toString() const override
         {
@@ -88,7 +88,7 @@ namespace Kili
             mMousePos(mousePos), mMouseMove(mouseMove) {}
         
         [[nodiscard]] const char* getName() const override { return "Mouse movement input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventMouse; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
         [[nodiscard]] std::string toString() const override
         {
@@ -113,7 +113,7 @@ namespace Kili
             mMouseScrollX(mouseScrollX), mMouseScrollY(mouseScrollY), mMousePos(mousePos), mFlipped(flipped) {}
         
         [[nodiscard]] const char* getName() const override { return "Mouse wheel input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventMouse; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventMouse; }
         
         [[nodiscard]] std::string toString() const override
         {
@@ -139,7 +139,7 @@ namespace Kili
             mGamepadButton(static_cast<SDL_GamepadButton>(button)), mDown(down) {}
         
         [[nodiscard]] const char* getName() const override { return "Gamepad button input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventGamepad; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventGamepad; }
         
         [[nodiscard]] std::string toString() const override
         {
@@ -163,7 +163,7 @@ namespace Kili
             mGamepadAxis(static_cast<SDL_GamepadAxis>(axis)), mGamepadAxisValue(axisValue) {}
         
         [[nodiscard]] const char* getName() const override { return "Gamepad axis input event"; }
-        [[nodiscard]] char getCategoryFlags() const override { return EventInput | EventGamepad; }
+        [[nodiscard]] int getCategoryFlags() const override { return EventInput | EventGamepad; }
         
         [[nodiscard]] std::string toString() const override
         {

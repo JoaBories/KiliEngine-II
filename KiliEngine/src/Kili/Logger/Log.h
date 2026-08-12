@@ -10,23 +10,19 @@
 
 namespace Kili
 {
-    enum class LogLevel : std::uint8_t
+    enum LogLevel : char
     {
-        None = 0,
-        Event,
-        Debug,
-        Info,
-        Loading,
-        Warning,
-        Error
+        Debug   = 1 << 0,
+        Info    = 1 << 1,
+        Loading = 1 << 2,
+        Warning = 1 << 3,
+        Error   = 1 << 4
     };
 
     inline const char* toString(const LogLevel e)
     {
         switch (e)
         {
-            case LogLevel::None: return "None";
-            case LogLevel::Event: return "Event";
             case LogLevel::Debug: return "Debug";
             case LogLevel::Info: return "Info";
             case LogLevel::Loading: return "Loading";
@@ -74,18 +70,18 @@ namespace Kili
         void removeLogger(const ILogger* logger);
         
         void log(LogLevel level, const std::string& message, const std::string& file, int line) const;
-        
     };
 
-#ifdef _DEBUG
+#ifndef KL_BUILD
     #define LOG_DEBUG(msg) Log::instance().log(LogLevel::Debug, msg, __FILE__, __LINE__)
     #define LOG_INFO(msg) Log::instance().log(LogLevel::Info, msg, __FILE__, __LINE__)
 #else
     #define LOG_DEBUG(msg) void(0)
     #define LOG_INFO(msg) void(0)
 #endif
-    
     #define LOG_LOADING(msg) Log::instance().log(LogLevel::Loading, msg, __FILE__, __LINE__)
     #define LOG_WARNING(msg) Log::instance().log(LogLevel::Warning, msg, __FILE__, __LINE__)
     #define LOG_ERROR(msg) Log::instance().log(LogLevel::Error, msg, __FILE__, __LINE__)
+    
+#define TEST_ALL_LOG LOG_DEBUG("Test Debug"); LOG_INFO("Test Info"); LOG_LOADING("Test Loading"); LOG_WARNING("Test Warning"); LOG_ERROR("Test Error");
 }

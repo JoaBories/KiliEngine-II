@@ -8,7 +8,6 @@ namespace Kili
 {
     enum EnumWindowFlags : char
     {
-        None = 0,
         WindowFullscreen =  1 << 0,
         WindowBorderless =  1 << 1,
         WindowAlwaysOnTop = 1 << 2,

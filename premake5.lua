@@ -131,7 +131,8 @@ project (runtime)
         "Sdl3"
     }
 
-    postbuildcommands { -- Used for copying SDL3 dll onto the exe folder 
+    -- Used for copying SDL3 dll onto the exe folder 
+    postbuildcommands { 
         "{COPYFILE} %[vendor/Sdl3/SDL3.dll] %[%{!cfg.targetdir}]"
     }
 

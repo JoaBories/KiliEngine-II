@@ -3,7 +3,7 @@
 
 #include "Kili/Logger/Log.h"
 
-Kili::IEventListener::IEventListener(const char categoryFilter) :
+Kili::IEventListener::IEventListener(const int categoryFilter) :
     mCategoryFilter(categoryFilter)
 {
     EventDispatcher::instance().addListener(this);

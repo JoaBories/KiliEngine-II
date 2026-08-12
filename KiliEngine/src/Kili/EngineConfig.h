@@ -17,8 +17,14 @@ namespace Kili
         int mInitialFpsLimit;
         bool mInitialVsync;
     
-        // Event system
+        // Logging
         bool mEventLogging;
+        int mEventLogMask;
+        
+        // Console
+        int mConsoleLevelMask;
+        
+        // ------------------
         
         explicit EngineConfig(const std::string& path);
         ~EngineConfig() = default;
@@ -38,5 +44,8 @@ namespace Kili
         [[nodiscard]] bool isInitialVsync() const { return mInitialVsync; }
         
         [[nodiscard]] bool isEventLogging() const { return mEventLogging; }
+        [[nodiscard]] int getEventLogMask() const { return mEventLogMask; }
+        
+        [[nodiscard]] int getConsoleLevelMask() const { return mConsoleLevelMask; }
     };
 }
