@@ -1,7 +1,8 @@
 ﻿#pragma once
 
-#include "Window.h"
-#include "Logger/ConsoleLogger.h"
+#include "Kili/Core/TimeClock.h"
+#include "Kili/Window.h"
+#include "Kili/Logger/ConsoleLogger.h"
 
 namespace Kili
 {
@@ -9,8 +10,9 @@ namespace Kili
     {
     private:
         ConsoleLogger* mConsoleLogger;
-        EventDispatcher* mEventDispatcher; // There is a EventDispatcher::instance() but i cache to avoid for less verbosity
+        EventDispatcher* mEventDispatcher; // There is a EventDispatcher::instance() but I cache to avoid for less verbosity
         Window* mWindow;
+        TimeClock* mTimeClock;
         bool mIsRunning;
         
         /**

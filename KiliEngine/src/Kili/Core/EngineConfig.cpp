@@ -1,9 +1,9 @@
 #include "klpch.h"
 #include "EngineConfig.h"
 
-#include "Window.h"
-#include "FileReadWrite/ConfigINI.h"
-#include "Logger/Log.h"
+#include "../Window.h"
+#include "../FileReadWrite/ConfigINI.h"
+#include "../Logger/Log.h"
 
 Kili::EngineConfig* Kili::EngineConfig::mInstance = nullptr;
 

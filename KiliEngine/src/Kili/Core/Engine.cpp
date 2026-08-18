@@ -2,7 +2,7 @@
 #include "Engine.h"
 
 #include "EngineConfig.h"
-#include "Events/EventDispatcher.h"
+#include "../Events/EventDispatcher.h"
 
 namespace Kili
 {
@@ -39,7 +39,7 @@ namespace Kili
         LOG_LOADING("Config loaded");
         
         mConsoleLogger->setLogLevelMask(config->getConsoleLevelMask());                     // DIST remove for build
-                                                                                            //                    
+                                                                                            //              
         mEventDispatcher = EventDispatcher::instance(); // Ensure a first initialization    //
         mEventDispatcher->setLoggingEvent(config->isEventLogging());                        //
         mEventDispatcher->setCategoryFilter(config->getEventLogMask());                     //
@@ -52,12 +52,20 @@ namespace Kili
         const WindowParameters winParams{ config->getWindowInitialWidth(), config->getWindowInitialHeight(), config->getWindowFlags(), config->isInitialVsync()};
         mWindow = new Window(config->getWindowName(), winParams);
         
+        mTimeClock = new TimeClock(config->getInitialFpsLimit());
+        mTimeClock->setLogging(true);
+        mTimeClock->setLoggingInterval(1.0f);
+        
         LOG_LOADING("KiliEngine Initialized");
     }
 
     void Engine::loop()
     {
+        mTimeClock->computeTime();
+        
         mEventDispatcher->pollSdlEvents();
+        
+        mTimeClock->delayTime();
     }
 
     void Engine::close()
@@ -67,7 +75,7 @@ namespace Kili
         delete mWindow;
         mWindow = nullptr;
         
-        LOG_INFO("KiliEngine Ended");
+        LOG_LOADING("KiliEngine Ended");
         
         delete mConsoleLogger;
         mConsoleLogger = nullptr;
