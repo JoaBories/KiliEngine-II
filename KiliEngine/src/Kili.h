@@ -6,4 +6,5 @@
 #include "Kili/Logger/Log.h"
 #include "Kili/Events/EventDispatcher.h"
 #include "Kili/Core/TimeClock.h"
+#include "Kili/Core/EngineConfig.h"
 

@@ -24,13 +24,16 @@ namespace Kili
          *  - Init and setup EventDispatcher.
          *  - Init SDL3 components (only VIDEO and GAMEPAD for now).
          *  - Create window.
+         *  - Init and setup TimeClock.
          */
         void init();
         
         /**
          * Do an engine tick called while the engine is running. \n
          * Loop order :
+         *  - Compute Time.
          *  - Poll sdl events in EventDispatcher.
+         *  - Delay time if fps are locked.
          */
         void loop();
         
