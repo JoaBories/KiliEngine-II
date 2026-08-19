@@ -11,17 +11,22 @@ namespace Kili
         // Window parameters
         std::string mWindowName;
         char mWindowFlags;
-        unsigned int mWindowInitialWidth;
-        unsigned int mWindowInitialHeight;
-        int mInitialFpsLimit;
-        bool mInitialVsync;
+        unsigned int mWindowWidth;
+        unsigned int mWindowHeight;
+        bool mVsync;
     
-        // Logging
+        // EventSystem
         bool mEventLogging;
         int mEventLogMask;
         
         // Console
         int mConsoleLevelMask;
+        
+        // Time
+        unsigned int mMaxFps;
+        float mMaxDeltaTime;
+        bool mFpsLogging;
+        float mFpsLogInterval;
         
         // ------------------
         
@@ -41,16 +46,22 @@ namespace Kili
         /** If it returns nullptr wait until engine initialize the instance */
         static EngineConfig* getInstance() { return mInstance; }
         
+        // Todo Implement setters to change parameters
+        
         [[nodiscard]] std::string getWindowName() const { return mWindowName; }
         [[nodiscard]] char getWindowFlags() const { return mWindowFlags; }
-        [[nodiscard]] unsigned int getWindowInitialWidth() const { return mWindowInitialWidth; }
-        [[nodiscard]] unsigned int getWindowInitialHeight() const { return mWindowInitialHeight; }
-        [[nodiscard]] int getInitialFpsLimit() const { return mInitialFpsLimit; }
-        [[nodiscard]] bool isInitialVsync() const { return mInitialVsync; }
+        [[nodiscard]] unsigned int getWindowWidth() const { return mWindowWidth; }
+        [[nodiscard]] unsigned int getWindowHeight() const { return mWindowHeight; }
+        [[nodiscard]] bool isVsync() const { return mVsync; }
         
         [[nodiscard]] bool isEventLogging() const { return mEventLogging; }
         [[nodiscard]] int getEventLogMask() const { return mEventLogMask; }
         
         [[nodiscard]] int getConsoleLevelMask() const { return mConsoleLevelMask; }
+        
+        [[nodiscard]] unsigned int getMaxFps() const { return mMaxFps; }
+        [[nodiscard]] float getMaxDeltaTime() const { return mMaxDeltaTime; }
+        [[nodiscard]] bool isFpsLogging() const { return mFpsLogging; }
+        [[nodiscard]] float getFpsLogInterval() const { return mFpsLogInterval; }
     };
 }

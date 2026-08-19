@@ -49,12 +49,12 @@ namespace Kili
         if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");     // TODO make gamepad working
         else LOG_LOADING("SDL GAMEPAD initialized");
         
-        const WindowParameters winParams{ config->getWindowInitialWidth(), config->getWindowInitialHeight(), config->getWindowFlags(), config->isInitialVsync()};
+        const WindowParameters winParams{ config->getWindowWidth(), config->getWindowHeight(), config->getWindowFlags(), config->isVsync()};
         mWindow = new Window(config->getWindowName(), winParams);
         
-        mTimeClock = new TimeClock(config->getInitialFpsLimit());
-        mTimeClock->setLogging(true);
-        mTimeClock->setLoggingInterval(1.0f);
+        mTimeClock = new TimeClock(config->getMaxFps(), config->getMaxDeltaTime());
+        mTimeClock->setLogging(config->isFpsLogging());
+        mTimeClock->setLoggingInterval(config->getFpsLogInterval());
         
         LOG_LOADING("KiliEngine Initialized");
     }

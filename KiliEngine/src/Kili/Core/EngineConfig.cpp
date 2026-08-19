@@ -18,16 +18,15 @@ Kili::EngineConfig::EngineConfig(const std::string& path)
     if (config.getBool("Window", "resizable")) mWindowFlags |= EnumWindowFlags::WindowResizable;
     if (config.getBool("Window", "always_on_top")) mWindowFlags |= EnumWindowFlags::WindowAlwaysOnTop;
     
-    mWindowInitialWidth = config.getInt("Window", "width", 400);
-    mWindowInitialHeight = config.getInt("Window", "height", 400);
+    mWindowWidth = config.getInt("Window", "width", 400);
+    mWindowHeight = config.getInt("Window", "height", 400);
     
-    mInitialFpsLimit = config.getInt("Window", "fps_limit", 60);
-    mInitialVsync = config.getBool("Window", "vsync");
+    mVsync = config.getBool("Window", "vsync");
     
-    mEventLogging = config.getBool("Logging", "logging_events");
+    mEventLogging = config.getBool("EventSystem", "logging");
     mEventLogMask = 0;
-    if (!config.getBool("Logging", "logging_mouse_events")) mEventLogMask |= EventCategory::EventMouse;
-    if (!config.getBool("Logging", "logging_keyboard_events")) mEventLogMask |= EventCategory::EventKeyboard;
+    if (!config.getBool("EventSystem", "logging_mouse_events")) mEventLogMask |= EventCategory::EventMouse;
+    if (!config.getBool("EventSystem", "logging_keyboard_events")) mEventLogMask |= EventCategory::EventKeyboard;
     
     mConsoleLevelMask = 0;
     if (!config.getBool("Console", "logging_info", true)) mConsoleLevelMask |= LogLevel::Info;
@@ -35,4 +34,10 @@ Kili::EngineConfig::EngineConfig(const std::string& path)
     if (!config.getBool("Console", "logging_loading", true)) mConsoleLevelMask |= LogLevel::Loading;
     if (!config.getBool("Console", "logging_warning", true)) mConsoleLevelMask |= LogLevel::Warning;
     if (!config.getBool("Console", "logging_error", true)) mConsoleLevelMask |= LogLevel::Error;
+    
+    mMaxFps = config.getInt("Time", "fps_max", 60);
+    mMaxDeltaTime = config.getFloat("Time", "max_delta_time", 1.0f);
+    
+    mFpsLogging = config.getBool("Time", "logging", false);
+    mFpsLogInterval = config.getFloat("Time", "log_interval", 1.0f);
 }

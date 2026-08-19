@@ -1,5 +1,8 @@
 #pragma once
 
+// Apparently the app is locked at 5 millions fps with unlimited fps. I don't if it comes from windows, Sdl3, or my code.
+// Not a big problem as it is quite hard to reach with actual code in the loop, I reached 5m with only polling Sdl3 events.
+
 namespace Kili
 {
     class TimeClock
@@ -23,7 +26,7 @@ namespace Kili
         
         bool mLogging;
         float mLogInterval;
-        float mLastLog;
+        double mLastLog;
 
         explicit TimeClock(unsigned int maxFps = 60, float maxDeltaTime = 1.0f);
         ~TimeClock() = default;

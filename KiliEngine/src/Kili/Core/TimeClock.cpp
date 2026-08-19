@@ -23,21 +23,25 @@ Kili::TimeClock::TimeClock(const unsigned int maxFps, const float maxDeltaTime) 
 
 void Kili::TimeClock::computeTime()
 {
+    // Set frame timers.
     mFrameStart = SDL_GetPerformanceCounter();
     mFrameTime = mFrameStart - mLastFrameStart;
     mLastFrameStart = mFrameStart;
     
+    // Compute Delta time.
     mDeltaTime = Klm::min(static_cast<float>(mFrameTime) / static_cast<float>(SdlFrequency), mMaxDeltaTime);
     
+    // Update time and frame count.
     mTime += mFrameTime;
     mFrameCount++;
     
+    // LogFps if needed
     if (mLogging)
     {
         if (time() > mLastLog + mLogInterval)
         {
             LOG_INFO("Avg : " + std::to_string(1 / avgFrameTime()) + " | Current : " + std::to_string(1 / deltaTime()) + " | FrameTime : " + std::to_string(deltaTime() * 1000));
-            mLastLog = static_cast<float>(time());
+            mLastLog = time();
         }
     }
 }
