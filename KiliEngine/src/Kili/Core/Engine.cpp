@@ -52,6 +52,13 @@ namespace Kili
         const WindowParameters winParams{ config->getWindowWidth(), config->getWindowHeight(), config->getWindowFlags(), config->isVsync()};
         mWindow = new Window(config->getWindowName(), winParams);
         
+        // Temp
+        SDL_GLContext context = SDL_GL_CreateContext(mWindow->getWindow());
+
+        if (const int version = gladLoadGL(SDL_GL_GetProcAddress); !version) LOG_ERROR("OpenGL could not initialize");
+        else LOG_LOADING("OpenGL " + std::to_string(GLAD_VERSION_MAJOR(version)) + "." + std::to_string(GLAD_VERSION_MINOR(version)) + " initialized");
+        //
+        
         mTimeClock = new TimeClock(config->getMaxFps(), config->getMaxDeltaTime());
         mTimeClock->setLogging(config->isFpsLogging());
         mTimeClock->setLoggingInterval(config->getFpsLogInterval());
