@@ -4,6 +4,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Names
 local mathlib = "KiliMathematics"
+local glad = "Glad"
 local engine = "KiliEngine"
 local runtime = "Runtime"
 
@@ -42,12 +43,50 @@ project (mathlib)
 
     filter "configurations:Debug"
         defines "KL_DEBUG"
+        optimize "On"
         symbols "On"
-
+        
     filter "configurations:Release"
         defines "KL_REL"
         optimize "On"
+        symbols "On"
 
+    filter "configurations:Build"
+        defines "KL_BUILD"
+        optimize "On"
+
+-- =========== Glad
+project (glad)
+    location "vendor/%{prj.name}"
+    kind "StaticLib"
+    language "C++"
+
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+    files {
+        "vendor/%{prj.name}/include/**.h",
+        "vendor/%{prj.name}/src/**.c"
+    }
+
+    includedirs {
+        ("vendor/" .. glad .. "/include")
+    }
+
+    cppdialect "c++17"
+    staticruntime "On"
+    systemversion "latest"
+    
+    filter "configurations:Debug"
+        defines "KL_DEBUG"
+        optimize "On"
+        symbols "On"
+    
+    filter "configurations:Release"
+        defines "KL_REL"
+        optimize "On"
+        symbols "On"
+    
     filter "configurations:Build"
         defines "KL_BUILD"
         optimize "On"
@@ -73,6 +112,7 @@ project (engine)
     includedirs {
         (mathlib .. "/src"),
         (engine .. "/src"),
+        ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
     }
 
@@ -82,6 +122,7 @@ project (engine)
 
     links {
         (mathlib),
+        (glad),
         "SDL3"
     }
 
@@ -96,6 +137,7 @@ project (engine)
     filter "configurations:Release"
         defines "KL_REL"
         optimize "On"
+        symbols "On"
 
     filter "configurations:Build"
         defines "KL_BUILD"
@@ -118,6 +160,7 @@ project (runtime)
     includedirs {
         (mathlib .. "/src"),
         (engine .. "/src"),
+        ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
     }
 
@@ -128,6 +171,7 @@ project (runtime)
     links {
         (mathlib),
         (engine),
+        (glad),
         "Sdl3"
     }
 
@@ -147,6 +191,7 @@ project (runtime)
     filter "configurations:Release"
         defines "KL_REL"
         optimize "On"
+        symbols "On"
 
     filter "configurations:Build"
         defines "KL_BUILD"

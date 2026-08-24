@@ -25,9 +25,10 @@
 
 #pragma endregion 
 
-#pragma region Sdl_Includes
+#pragma region Vendor_Include
 
 #include "SDL.h"
+#include "glad/glad.h"
 
 #pragma endregion
 
