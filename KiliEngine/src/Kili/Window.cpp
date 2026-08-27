@@ -39,12 +39,6 @@ Kili::Window::Window(std::string title, const WindowParameters params) :
     mWidth(params.width), mHeight(params.height), 
     mFlags(params.flags), mVsync(params.vsync)
 {
-    init();
-}
-
-Kili::Window::~Window()
-{
-    close();
 }
 
 void Kili::Window::setVsync(const bool vsync)

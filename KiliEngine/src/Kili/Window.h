@@ -33,17 +33,19 @@ namespace Kili
         char mFlags;
         bool mVsync;
     
-        void init();
-        void close();
         
     public:
         Window(std::string title, WindowParameters params);
-        virtual ~Window();
+        virtual ~Window() = default;
         
-        Window(const Window&) = delete;
-        Window& operator=(const Window&) = delete;
-        Window(Window&&) = delete;
-        Window& operator=(Window&&) = delete;
+        void init();
+        void close();
+        
+        // Rule of zero
+        Window(const Window& other) = delete;
+        Window(Window&& other) noexcept = delete;
+        Window& operator=(const Window& other) = delete;
+        Window& operator=(Window&& other) noexcept = delete;
         
         [[nodiscard]] SDL_Window* getWindow() const { return mWindow; }
         

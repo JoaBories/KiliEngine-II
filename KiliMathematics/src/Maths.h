@@ -5,18 +5,18 @@
 
 namespace Klm {
 
-    constexpr float Pi = 3.1415926536f;
-    constexpr float TwoPi = Pi * 2.0f;
-    constexpr float HalfPi = Pi / 2.0f;
-    constexpr float QuarterPi = Pi / 4.0f;
+    constexpr float PI = 3.1415926536f;
+    constexpr float TWO_PI = PI * 2.0f;
+    constexpr float HALF_PI = PI / 2.0f;
+    constexpr float QUARTER_PI = PI / 4.0f;
     
-    constexpr float Deg2Rad = Pi/180;
-    constexpr float Rad2Deg = 180/Pi;
+    constexpr float DEG2_RAD = PI/180;
+    constexpr float RAD2_DEG = 180/PI;
     
-    constexpr double Epsilon = 1e-8;
+    constexpr double EPSILON = 1e-8;
     
-    constexpr float InfinityPos = std::numeric_limits<float>::infinity();
-    constexpr float InfinityNeg = -InfinityPos;
+    constexpr float INFINITY_POS = std::numeric_limits<float>::infinity();
+    constexpr float INFINITY_NEG = -INFINITY_POS;
 
     // Arithmetic
     inline float min(const float a, const float b)							                { return a <= b ? a : b; }
@@ -38,8 +38,8 @@ namespace Klm {
         return std::round(val * power) / power;
     }
     
-    inline bool nearZero(const float value, const double epsilon = Epsilon)				    { return abs(value) <= epsilon; }
-    inline bool nearlyEqual(const float a, const float b, const double epsilon = Epsilon)   { return nearZero(a - b, epsilon); }
+    inline bool nearZero(const float value, const double epsilon = EPSILON)				    { return abs(value) <= epsilon; }
+    inline bool nearlyEqual(const float a, const float b, const double epsilon = EPSILON)   { return nearZero(a - b, epsilon); }
     
     // Trigonometry
     inline float cos(const float angle)													    { return std::cosf(angle); }
@@ -50,5 +50,4 @@ namespace Klm {
     inline float aTan(const float angle)												    { return std::atanf(angle); }
     inline float aTan2(const float opposite, const float adjacent)						    { return std::atan2f(opposite, adjacent); }
     inline float cot(const float angle)													    { return 1.0f / tan(angle); }
-    
 };

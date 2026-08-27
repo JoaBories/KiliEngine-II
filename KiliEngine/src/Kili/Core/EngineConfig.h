@@ -39,8 +39,8 @@ namespace Kili
     public:
         // Rule of zero
         EngineConfig(const EngineConfig&) = delete;
-        EngineConfig& operator=(const EngineConfig&) = delete;
         EngineConfig(EngineConfig&& pOther) noexcept = delete;
+        EngineConfig& operator=(const EngineConfig&) = delete;
         EngineConfig& operator=(EngineConfig&& pOther) noexcept = delete;
         
         /** If it returns nullptr wait until engine initialize the instance */

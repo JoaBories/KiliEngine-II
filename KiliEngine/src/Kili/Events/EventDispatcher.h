@@ -46,6 +46,6 @@ namespace Kili
         
         // DIST to remove for distribution
         void setLoggingEvent(const bool logging) { mLogging = logging; }
-        void setCategoryFilter(const int categoryFilter) { mCategoryFilter = categoryFilter; } /* Prevent for logging event from these categories */
+        void setLogFilter(const int categoryFilter) { mCategoryFilter = categoryFilter; } /* Prevent for logging event from these categories */
     };
 } 

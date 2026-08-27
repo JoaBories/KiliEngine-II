@@ -10,6 +10,7 @@ namespace Kili
         mConsoleLogger(nullptr),
         mEventDispatcher(nullptr),
         mWindow(nullptr),
+        mTimeClock(nullptr),
         mIsRunning(false)
     {
     }
@@ -42,7 +43,7 @@ namespace Kili
                                                                                             //              
         mEventDispatcher = EventDispatcher::instance(); // Ensure a first initialization    //
         mEventDispatcher->setLoggingEvent(config->isEventLogging());                        //
-        mEventDispatcher->setCategoryFilter(config->getEventLogMask());                     //
+        mEventDispatcher->setLogFilter(config->getEventLogMask());                          //
         
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
         else LOG_LOADING("SDL VIDEO initialized");
@@ -51,6 +52,7 @@ namespace Kili
         
         const WindowParameters winParams{ config->getWindowWidth(), config->getWindowHeight(), config->getWindowFlags(), config->isVsync()};
         mWindow = new Window(config->getWindowName(), winParams);
+        mWindow->init();
         
         // Temp
         SDL_GLContext context = SDL_GL_CreateContext(mWindow->getWindow());
@@ -79,6 +81,7 @@ namespace Kili
     {
         EngineConfig::closeInstance();
         
+        mWindow->close();
         delete mWindow;
         mWindow = nullptr;
         
