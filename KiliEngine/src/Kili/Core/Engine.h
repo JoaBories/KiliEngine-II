@@ -3,17 +3,20 @@
 #include "Kili/Core/TimeClock.h"
 #include "Kili/Window.h"
 #include "Kili/Logger/ConsoleLogger.h"
+#include "Kili/Events/Event.h"
 
 namespace Kili
 {
-    class Engine : public IEventListener
+    class Engine
     {
     private:
         ConsoleLogger* mConsoleLogger;
-        EventDispatcher* mEventDispatcher; // There is a EventDispatcher::instance() but I cache to avoid for less verbosity
         Window* mWindow;
         TimeClock* mTimeClock;
         bool mIsRunning;
+        
+        bool mLoggingEvents;
+        int mEventLogFilter;
         
         /**
          * Init all the engine components and set them up. \n
@@ -21,7 +24,7 @@ namespace Kili
          *  - Init log and console logger. So we can see errors.
          *  - Load Engine Config from "KiliEngine.ini".
          *  - Set up log and console with their parameters.
-         *  - Init and setup EventDispatcher.
+         *  - Set up event logging.
          *  - Init SDL3 components (only VIDEO and GAMEPAD for now).
          *  - Create window.
          *  - Init and setup TimeClock.
@@ -42,8 +45,8 @@ namespace Kili
          */
         void close();
         
-    protected:
-        void onEvent(const IEvent& event) override { if (event.getType() == EventType::AppClose) mIsRunning = false; }
+        void onEvent(const IEvent& event);
+        void pollEvents();
         
     public:
         Engine();

@@ -34,7 +34,6 @@ void Kili::Window::close()
 }
 
 Kili::Window::Window(std::string title, const WindowParameters params) :
-    IEventListener(EventWindow),
     mTitle(std::move(title)), mWindow(nullptr), 
     mWidth(params.width), mHeight(params.height), 
     mFlags(params.flags), mVsync(params.vsync)
@@ -55,15 +54,4 @@ void Kili::Window::setVsync(const bool vsync)
     }
     
     // ADDAPI
-}
-
-void Kili::Window::onEvent(const IEvent& event)
-{
-    if (event.getType() == EventType::WindowResize)
-    {
-        const auto& resizeEvent = static_cast<const WindowResizeEvent&>(event);
-        mHeight = resizeEvent.getHeight();
-        mWidth = resizeEvent.getWidth();
-        // Todo implement proper window resize
-    }
 }

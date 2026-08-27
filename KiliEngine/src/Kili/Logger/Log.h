@@ -5,18 +5,18 @@
 *   Simple class for logging in the engine and other applications :
 *       -Use macros for logging at different levels (debug and info are disabled in release)
 *       -You can create a logger inheriting from ILogger and subscribing with addLogger()
-*       -Logs are getting the file and the line where it was called and also getting the timestamp. 
+*       -Logs are getting the file and the line where it was called and the timestamp.
 */
 
 namespace Kili
 {
     enum LogLevel : char
     {
-        Debug   = 1 << 0,
-        Info    = 1 << 1,
-        Loading = 1 << 2,
-        Warning = 1 << 3,
-        Error   = 1 << 4
+        Debug   = BIT(0),
+        Info    = BIT(1),
+        Loading = BIT(2),
+        Warning = BIT(3),
+        Error   = BIT(4),
     };
 
     inline const char* toString(const LogLevel e)

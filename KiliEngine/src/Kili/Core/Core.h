@@ -9,4 +9,6 @@ namespace Kili
     };
 
     constexpr RenderingApi RENDER_API = RenderingApi::OpenGl;
+    
+#define BIT(offset) (1 << offset)
 }

@@ -9,9 +9,8 @@ namespace Kili
     public:
         WindowCloseEvent() = default;
         
-        [[nodiscard]] EventType getType() const override { return EventType::WindowClose; }
-        [[nodiscard]] const char* getName() const override { return "Window close event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        EVENT_CLASS_TYPE(WindowClose)
+        EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
     };
     
     class WindowResizeEvent : public IEvent
@@ -23,9 +22,8 @@ namespace Kili
         WindowResizeEvent(const unsigned int width, const unsigned int height) : 
             mWidth(width), mHeight(height) {}
         
-        [[nodiscard]] EventType getType() const override { return EventType::WindowResize; }
-        [[nodiscard]] const char* getName() const override { return "Window resize event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        EVENT_CLASS_TYPE(WindowResize)
+        EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
         
         [[nodiscard]] std::string toString() const override
         {
@@ -34,6 +32,8 @@ namespace Kili
         
         [[nodiscard]] unsigned int getWidth() const { return mWidth; }
         [[nodiscard]] unsigned int getHeight() const { return mHeight; }
+        
+        // Todo implement proper window resize
     };
     
     class WindowFocusUpdateEvent : public IEvent
@@ -45,9 +45,8 @@ namespace Kili
         explicit WindowFocusUpdateEvent(const bool gained) :
             mGained(gained) {}
         
-        [[nodiscard]] EventType getType() const override { return EventType::WindowFocus; }
-        [[nodiscard]] const char* getName() const override { return "Window focus event"; }
-        [[nodiscard]] int getCategoryFlags() const override { return EventWindow;}
+        EVENT_CLASS_TYPE(WindowFocus)
+        EVENT_CLASS_CATEGORY(EventCategory::EventWindow)
         
         [[nodiscard]] std::string toString() const override
         {

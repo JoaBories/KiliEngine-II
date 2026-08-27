@@ -1,17 +1,17 @@
 #pragma once
 
-#include "klpch.h"
-
-#include "Events/EventDispatcher.h"
+#include "SDL.h"
+#include "Kili/Core/Core.h"
+#include <string>
 
 namespace Kili
 {
     enum EnumWindowFlags : char
     {
-        WindowFullscreen =  1 << 0,
-        WindowBorderless =  1 << 1,
-        WindowAlwaysOnTop = 1 << 2,
-        WindowResizable =   1 << 3,
+        WindowFullscreen =  BIT(0),
+        WindowBorderless =  BIT(1),
+        WindowAlwaysOnTop = BIT(2),
+        WindowResizable =   BIT(3),
     };
     
     struct WindowParameters
@@ -24,7 +24,7 @@ namespace Kili
         bool vsync; 
     };
     
-    class Window : public IEventListener
+    class Window
     {
     private:
         std::string mTitle;
@@ -56,8 +56,5 @@ namespace Kili
         
         [[nodiscard]] bool isVsync() const { return mVsync; }
         void setVsync(bool vsync);
-
-    protected:
-        void onEvent(const IEvent& event) override;
     };
 }
