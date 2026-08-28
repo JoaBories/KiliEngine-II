@@ -37,8 +37,8 @@ namespace Kili
     public:
         Window(std::string title, WindowParameters params);
         virtual ~Window() = default;
-        
-        void init();
+
+        bool init();
         void close();
         
         // Rule of zero

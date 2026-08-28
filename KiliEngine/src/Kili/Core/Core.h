@@ -2,13 +2,13 @@
 
 namespace Kili
 {
-    enum class RenderingApi : char
+    enum class GraphicApi : char
     {
         None,
         OpenGl,
     };
 
-    constexpr RenderingApi RENDER_API = RenderingApi::OpenGl;
+    constexpr GraphicApi GRAPHIC_API = GraphicApi::OpenGl;
     
 #define BIT(offset) (1 << offset)
 }

@@ -1,17 +1,16 @@
 #include "klpch.h"
 #include "Window.h"
-#include "Events/WindowEvent.h"
 #include "Logger/Log.h"
 
-void Kili::Window::init()
+bool Kili::Window::init()
 {
     int windowFlags = 0;
     
-    if constexpr (RENDER_API == RenderingApi::None)
+    if constexpr (GRAPHIC_API == GraphicApi::None)
     {
         LOG_WARNING("Rendering Api None isn't supported");
     }
-    else if constexpr (RENDER_API == RenderingApi::OpenGl)
+    else if constexpr (GRAPHIC_API == GraphicApi::OpenGl)
     {
         SDL_GL_SetSwapInterval(mVsync);
         windowFlags |= SDL_WINDOW_OPENGL;
@@ -25,6 +24,8 @@ void Kili::Window::init()
     if (mFlags & WindowAlwaysOnTop) windowFlags |= SDL_WINDOW_ALWAYS_ON_TOP;
     
     mWindow = SDL_CreateWindow(mTitle.c_str(), static_cast<int>(mWidth), static_cast<int>(mHeight), windowFlags);
+    
+    return mWindow;
 }
 
 void Kili::Window::close()
@@ -44,11 +45,11 @@ void Kili::Window::setVsync(const bool vsync)
 {
     mVsync = vsync;
     
-    if constexpr (RENDER_API == RenderingApi::None)
+    if constexpr (GRAPHIC_API == GraphicApi::None)
     {
         LOG_WARNING("Rendering Api None does not support Vsync");
     }
-    else if constexpr (RENDER_API == RenderingApi::OpenGl)
+    else if constexpr (GRAPHIC_API == GraphicApi::OpenGl)
     {
         SDL_GL_SetSwapInterval(mVsync);
     }

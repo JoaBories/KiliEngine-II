@@ -21,11 +21,11 @@ namespace Kili
                 break;
                 
             case SDL_EVENT_KEY_DOWN:
-                onEvent(KeyEvent(event.key.key, true, event.key.repeat));
+                onEvent(KeyboardEvent(event.key.key, true, event.key.repeat));
                 break;
                 
             case SDL_EVENT_KEY_UP:
-                onEvent(KeyEvent(event.key.key, false, event.key.repeat));
+                onEvent(KeyboardEvent(event.key.key, false, event.key.repeat));
                 break;
                 
             case SDL_EVENT_MOUSE_BUTTON_DOWN:
@@ -85,7 +85,7 @@ namespace Kili
     
     void Engine::onEvent(const IEvent& event)
     {
-        // Catch close event
+        // Catch window close event
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
         
         //Future possible usages of events :
@@ -144,7 +144,8 @@ namespace Kili
         
         const WindowParameters winParams{ config.getWindowWidth(), config.getWindowHeight(), config.getWindowFlags(), config.isVsync()};
         mWindow = new Window(config.getWindowName(), winParams);
-        mWindow->init();
+        if (!mWindow->init())  LOG_ERROR("Window could not initialize");
+        else LOG_LOADING("Window initialized");
         
         // Temp
         SDL_GLContext context = SDL_GL_CreateContext(mWindow->getWindow());

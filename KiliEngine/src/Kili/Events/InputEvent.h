@@ -4,7 +4,7 @@
 
 namespace Kili
 {
-    class KeyEvent : public IEvent
+    class KeyboardEvent : public IEvent
     {
     protected:
         SDL_Keycode mKey;
@@ -12,7 +12,7 @@ namespace Kili
         bool mIsRepeat;
         
     public:
-        KeyEvent(const SDL_Keycode keycode, const bool down, const bool repeat) : 
+        KeyboardEvent(const SDL_Keycode keycode, const bool down, const bool repeat) : 
             mKey(keycode), mIsDown(down), mIsRepeat(repeat) {}
 
         EVENT_CLASS_TYPE(InputKeyboard)
