@@ -43,7 +43,6 @@ project (mathlib)
 
     filter "configurations:Debug"
         defines "KL_DEBUG"
-        optimize "On"
         symbols "On"
         
     filter "configurations:Release"
@@ -79,7 +78,6 @@ project (glad)
     
     filter "configurations:Debug"
         defines "KL_DEBUG"
-        optimize "On"
         symbols "On"
     
     filter "configurations:Release"
