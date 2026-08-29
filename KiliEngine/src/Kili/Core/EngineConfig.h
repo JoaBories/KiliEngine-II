@@ -21,6 +21,7 @@ namespace Kili
         
         [[nodiscard]] std::string getWindowName() const { return mConfig.getString("Window", "name", "DefaultName"); }
         [[nodiscard]] char getWindowFlags() const;
+        [[nodiscard]] char getMsaa() const { return static_cast<char>(mConfig.getInt("Window", "msaa", 0)); }
         [[nodiscard]] unsigned int getWindowWidth() const { return mConfig.getInt("Window", "width", 400); }
         [[nodiscard]] unsigned int getWindowHeight() const { return mConfig.getInt("Window", "height", 600); }
         [[nodiscard]] bool isVsync() const { return mConfig.getBool("Window", "vsync"); }

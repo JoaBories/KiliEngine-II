@@ -13,7 +13,9 @@ namespace Kili
         ConsoleLogger* mConsoleLogger;
         Window* mWindow;
         TimeClock* mTimeClock;
+        
         bool mIsRunning;
+        bool mMinimized;
         
         bool mLoggingEvents;
         int mEventLogFilter;
@@ -23,11 +25,11 @@ namespace Kili
          * Init order :
          *  - Init log and console logger. So we can see errors.
          *  - Load Engine Config from "KiliEngine.ini".
-         *  - Set up log and console with their parameters.
-         *  - Set up event logging.
+         *  - Config log and console with their parameters.
+         *  - Config event logging.
          *  - Init SDL3 components (only VIDEO and GAMEPAD for now).
-         *  - Create window.
-         *  - Init and setup TimeClock.
+         *  - Init and config window.
+         *  - Init and config TimeClock.
          */
         void init();
         

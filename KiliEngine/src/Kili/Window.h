@@ -1,7 +1,9 @@
 #pragma once
 
-#include "SDL.h"
 #include "Kili/Core/Core.h"
+#include "Kili/Renderer/GraphicContext.h"
+
+#include "SDL.h"
 #include <string>
 
 namespace Kili
@@ -20,6 +22,8 @@ namespace Kili
         unsigned int height, width;
         /** Flags from EnumWindowFlags. \n Example : WindowVsync | WindowFullscreen | WindowBorderless. **/
         char flags;
+        /** Number of samples for MSAA antialiasing. Set to zero to deactivate. **/
+        char msaa;
         /** The window should start with vsync or no **/
         bool vsync; 
     };
@@ -29,16 +33,19 @@ namespace Kili
     private:
         std::string mTitle;
         SDL_Window* mWindow;
+        IGraphicContext* mContext;
         unsigned int mWidth, mHeight;
         char mFlags;
+        char mMsaa;
         bool mVsync;
     
         
     public:
         Window(std::string title, WindowParameters params);
-        virtual ~Window() = default;
+        ~Window();
 
         bool init();
+        void update();
         void close();
         
         // Rule of zero
@@ -53,6 +60,8 @@ namespace Kili
         [[nodiscard]] unsigned int getHeight() const { return mHeight; }
         
         [[nodiscard]] char getFlags() const { return mFlags; }
+        
+        [[nodiscard]] char getMsaa() const { return mMsaa; }
         
         [[nodiscard]] bool isVsync() const { return mVsync; }
         void setVsync(bool vsync);

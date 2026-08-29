@@ -73,11 +73,11 @@ namespace Kili
                 break;
                 
             case SDL_EVENT_WINDOW_FOCUS_GAINED:
-                onEvent(WindowFocusUpdateEvent(true));
+                onEvent(WindowFocusEvent(true));
                 break;
                 
             case SDL_EVENT_WINDOW_FOCUS_LOST:
-                onEvent(WindowFocusUpdateEvent(false));
+                onEvent(WindowFocusEvent(false));
                 break;
             }
         }
@@ -87,6 +87,7 @@ namespace Kili
     {
         // Catch window close event
         DispatchEvent<WindowCloseEvent>(event, [this](const WindowCloseEvent& e) { mIsRunning = false; });
+        DispatchEvent<WindowFocusEvent>(event, [this](const WindowFocusEvent& e) { mMinimized = !e.isGained(); });
         
         //Future possible usages of events :
         //mInputManager->onEvent(event);
@@ -102,9 +103,7 @@ namespace Kili
     Engine::Engine() : 
         mConsoleLogger(nullptr),
         mWindow(nullptr),
-        mTimeClock(nullptr),
-        mIsRunning(false),
-        mLoggingEvents(true), mEventLogFilter(EventMouse)
+        mTimeClock(nullptr)
     {
     }
 
@@ -124,36 +123,36 @@ namespace Kili
 
     void Engine::init()
     {
+        // Init log
         Log::instance(); // Ensure a first initialization of the log
         mConsoleLogger = new ConsoleLogger();
         
         LOG_LOADING("KiliEngine Initialization");
         
+        // Load config
         const EngineConfig config("KiliEngine.ini", "KiliEngine");
         LOG_LOADING("Config loaded");
         
+        // Config logs and events
         mConsoleLogger->setLogLevelMask(config.getConsoleLevelMask());
         
         mLoggingEvents = config.isEventLogging();
         mEventLogFilter = config.getEventLogFilter();
         
+        // SDL init
         if (!SDL_Init(SDL_INIT_VIDEO)) LOG_ERROR("SDL_VIDEO could not initialize");
         else LOG_LOADING("SDL VIDEO initialized");
         if (!SDL_Init(SDL_INIT_GAMEPAD)) LOG_ERROR("SDL GAMEPAD could not initialize");     // TODO make gamepad working
         else LOG_LOADING("SDL GAMEPAD initialized");
         
-        const WindowParameters winParams{ config.getWindowWidth(), config.getWindowHeight(), config.getWindowFlags(), config.isVsync()};
+        // Init and config window
+        const WindowParameters winParams{ config.getWindowWidth(), config.getWindowHeight(), config.getWindowFlags(), config.getMsaa(), config.isVsync()};
         mWindow = new Window(config.getWindowName(), winParams);
+        
         if (!mWindow->init())  LOG_ERROR("Window could not initialize");
         else LOG_LOADING("Window initialized");
         
-        // Temp
-        SDL_GLContext context = SDL_GL_CreateContext(mWindow->getWindow());
-
-        if (const int version = gladLoadGL(SDL_GL_GetProcAddress); !version) LOG_ERROR("OpenGL could not initialize");
-        else LOG_LOADING("OpenGL " + std::to_string(GLAD_VERSION_MAJOR(version)) + "." + std::to_string(GLAD_VERSION_MINOR(version)) + " initialized");
-        //
-        
+        // Init and config time clock
         mTimeClock = new TimeClock(config.getMaxFps(), config.getMaxDeltaTime());
         mTimeClock->setLogging(config.isFpsLogging());
         mTimeClock->setLoggingInterval(config.getFpsLogInterval());
@@ -167,14 +166,29 @@ namespace Kili
         
         pollEvents();
         
+        //update
+        
+        if (!mMinimized)
+        {
+            //render
+            glClearColor(0.29f, 0.99f, 0.87f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            
+            mWindow->update();
+        }
+        
         mTimeClock->delayTime();
     }
 
     void Engine::close()
     {
-        mWindow->close();
         delete mWindow;
         mWindow = nullptr;
+        
+        delete mTimeClock;
+        mTimeClock = nullptr;
+        
+        SDL_Quit();
         
         LOG_LOADING("KiliEngine Ended");
         

@@ -36,13 +36,13 @@ namespace Kili
         // Todo implement proper window resize
     };
     
-    class WindowFocusUpdateEvent : public IEvent
+    class WindowFocusEvent : public IEvent
     {
     protected:
         bool mGained;
         
     public:
-        explicit WindowFocusUpdateEvent(const bool gained) :
+        explicit WindowFocusEvent(const bool gained) :
             mGained(gained) {}
         
         EVENT_CLASS_TYPE(WindowFocus)
