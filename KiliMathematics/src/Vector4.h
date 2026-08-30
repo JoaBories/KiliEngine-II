@@ -72,13 +72,13 @@ struct Vector4
     
     bool operator==(const Vector4& rhs) const
     {
-        if (Klm::nearlyEqual(x, rhs.x)) if (Klm::nearlyEqual(y, rhs.y)) if (Klm::nearlyEqual(z, rhs.z)) return true;
+        if (Klm::NearlyEqual(x, rhs.x)) if (Klm::NearlyEqual(y, rhs.y)) if (Klm::NearlyEqual(z, rhs.z)) return true;
         return false;
     }
     bool operator!=(const Vector4& rhs) const { return !(*this == rhs); }
 
     [[nodiscard]] float lengthSquared() const   { return x * x + y * y + z * z + w * w; }
-    [[nodiscard]] float length() const          { return Klm::sqrt(lengthSquared()); }
+    [[nodiscard]] float length() const          { return Klm::Sqrt(lengthSquared()); }
     
     void normalize() { *this /= length(); }
     [[nodiscard]] Vector4 normalized() const    { return *this / length(); }

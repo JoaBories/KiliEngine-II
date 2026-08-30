@@ -20,7 +20,7 @@ struct Quaternion
     void normalize();
 
     [[nodiscard]] float lengthSquared() const { return x * x + y * y + z * z + w * w; }
-    [[nodiscard]] float length() const { return Klm::sqrt(lengthSquared()); }
+    [[nodiscard]] float length() const { return Klm::Sqrt(lengthSquared()); }
     
     [[nodiscard]] float dot(const Quaternion& rhs) const { return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w; }
     

@@ -3,8 +3,8 @@
 
 /*
 *   Simple class for logging in the engine and other applications :
-*       -Use macros for logging at different levels (debug and info are disabled in release)
-*       -You can create a logger inheriting from ILogger and subscribing with addLogger()
+*       -Use macros for logging at different levels.
+*       -You can create a logger inheriting from ILogger and subscribing with addLogger().
 *       -Logs are getting the file and the line where it was called and the timestamp.
 */
 
@@ -72,16 +72,11 @@ namespace Kili
         void log(LogLevel level, const std::string& message, const std::string& file, int line) const;
     };
 
-#ifndef KL_BUILD
-    #define LOG_DEBUG(msg) Log::instance()->log(LogLevel::Debug, msg, __FILE__, __LINE__)
-    #define LOG_INFO(msg) Log::instance()->log(LogLevel::Info, msg, __FILE__, __LINE__)
-#else
-    #define LOG_DEBUG(msg) void(0)
-    #define LOG_INFO(msg) void(0)
-#endif
-    #define LOG_LOADING(msg) Log::instance()->log(LogLevel::Loading, msg, __FILE__, __LINE__)
-    #define LOG_WARNING(msg) Log::instance()->log(LogLevel::Warning, msg, __FILE__, __LINE__)
-    #define LOG_ERROR(msg) Log::instance()->log(LogLevel::Error, msg, __FILE__, __LINE__)
+#define LOG_DEBUG(msg) Log::instance()->log(LogLevel::Debug, msg, __FILE__, __LINE__)
+#define LOG_INFO(msg) Log::instance()->log(LogLevel::Info, msg, __FILE__, __LINE__)
+#define LOG_LOADING(msg) Log::instance()->log(LogLevel::Loading, msg, __FILE__, __LINE__)
+#define LOG_WARNING(msg) Log::instance()->log(LogLevel::Warning, msg, __FILE__, __LINE__)
+#define LOG_ERROR(msg) Log::instance()->log(LogLevel::Error, msg, __FILE__, __LINE__)
     
 #define TEST_ALL_LOG LOG_DEBUG("Test Debug"); LOG_INFO("Test Info"); LOG_LOADING("Test Loading"); LOG_WARNING("Test Warning"); LOG_ERROR("Test Error");
 }

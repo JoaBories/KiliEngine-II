@@ -10,11 +10,18 @@ namespace Kili
         SDL_GLContext mContext;
         
     public:
-        explicit OpenGlContext(SDL_Window* windowHandle);
-        virtual ~OpenGlContext() = default;
+        OpenGlContext() = default;
         
-        void init() override;
-        void swapBuffers() override;
+        void init(SDL_Window* windowHandle) override;
         void close() override;
+        
+        void swapBuffers() override { SDL_GL_SwapWindow(mWindowHandle); }
+        
+        [[nodiscard]] int getWindowFlag() const override { return SDL_WINDOW_OPENGL; }
+        
+        void setMsaa(int samples) override;
+        
+        void setVsync(const bool enabled) override { SDL_GL_SetSwapInterval(enabled); }
+        [[nodiscard]] bool getVsync() const override { int interval; SDL_GL_GetSwapInterval(&interval); return interval;  }
     };
 }

@@ -20,6 +20,8 @@ namespace Kili
         bool mLoggingEvents;
         int mEventLogFilter;
         
+        unsigned int mVertexArray, mVertexBuffer, mIndexBuffer; // Temp
+        
         /**
          * Init all the engine components and set them up. \n
          * Init order :
@@ -58,5 +60,5 @@ namespace Kili
     };
     
     // To be defined in runtime app
-    Engine* createEngine();
+    Engine* CreateEngine();
 }

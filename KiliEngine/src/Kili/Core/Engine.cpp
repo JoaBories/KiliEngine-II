@@ -5,7 +5,6 @@
 
 #include "Kili/Events/InputEvent.h"
 #include "Kili/Events/WindowEvent.h"
-#include "Kili/FileReadWrite/ConfigINI.h"
 
 namespace Kili
 {
@@ -79,6 +78,9 @@ namespace Kili
             case SDL_EVENT_WINDOW_FOCUS_LOST:
                 onEvent(WindowFocusEvent(false));
                 break;
+                
+            default:
+                break;
             }
         }
     }
@@ -103,7 +105,9 @@ namespace Kili
     Engine::Engine() : 
         mConsoleLogger(nullptr),
         mWindow(nullptr),
-        mTimeClock(nullptr)
+        mTimeClock(nullptr),
+        mIsRunning(false), mMinimized(false), 
+        mLoggingEvents(false), mEventLogFilter(0)
     {
     }
 
@@ -152,6 +156,31 @@ namespace Kili
         if (!mWindow->init())  LOG_ERROR("Window could not initialize");
         else LOG_LOADING("Window initialized");
         
+        //Temp
+        glGenVertexArrays(1, &mVertexArray);
+        glBindVertexArray(mVertexArray);
+        
+        glGenBuffers(1, &mVertexBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
+
+        float vertices[3*3] = {
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.0f,  0.5f, 0.0f,
+        };
+        
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), nullptr);
+        
+        glGenBuffers(1, &mIndexBuffer);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
+        
+        unsigned int indices[3] = { 0, 1, 2 };
+        
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        
         // Init and config time clock
         mTimeClock = new TimeClock(config.getMaxFps(), config.getMaxDeltaTime());
         mTimeClock->setLogging(config.isFpsLogging());
@@ -170,12 +199,15 @@ namespace Kili
         
         if (!mMinimized)
         {
-            //render
-            glClearColor(0.29f, 0.99f, 0.87f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
-            mWindow->update();
+            //render
+            glBindVertexArray(mVertexArray);
+            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
         }
+        
+        mWindow->update();
         
         mTimeClock->delayTime();
     }

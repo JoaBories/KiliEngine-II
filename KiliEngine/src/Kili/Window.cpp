@@ -1,40 +1,35 @@
 #include "klpch.h"
 #include "Window.h"
 
-#include "Kili/Logger/Log.h"
 #include "Kili/Renderer/GraphicApi/OpenGl/OpenGlContext.h"
+#include "Logger/Log.h"
 
 bool Kili::Window::init()
 {
+    if (GRAPHIC_API == GraphicApi::OpenGl) mContext = new OpenGlContext();
+    else
+    {
+        LOG_ERROR("Graphic Api None is not supported");
+        return false;
+    }
+    
+    if (mMsaa) mContext->setMsaa(mMsaa);
+    
     int windowFlags = 0;
-    
-    if constexpr (GRAPHIC_API == GraphicApi::None) LOG_WARNING("Rendering Api None isn't supported");
-    else if constexpr (GRAPHIC_API == GraphicApi::OpenGl) windowFlags |= SDL_WINDOW_OPENGL;
-    // ADDAPI
-    
     if (mFlags & WindowFullscreen) windowFlags |= SDL_WINDOW_FULLSCREEN;
     if (mFlags & WindowBorderless) windowFlags |= SDL_WINDOW_BORDERLESS;
     if (mFlags & WindowResizable) windowFlags |= SDL_WINDOW_RESIZABLE;
     if (mFlags & WindowAlwaysOnTop) windowFlags |= SDL_WINDOW_ALWAYS_ON_TOP;
-    
-    if (mMsaa)
-    {
-        if constexpr (GRAPHIC_API == GraphicApi::None) LOG_WARNING("Rendering Api None isn't supported");
-        else if constexpr (GRAPHIC_API == GraphicApi::OpenGl)
-        {
-            SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-            SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, mMsaa);
-        }
-    }
+    windowFlags |= mContext->getWindowFlag();
     
     mWindow = SDL_CreateWindow(mTitle.c_str(), static_cast<int>(mWidth), static_cast<int>(mHeight), windowFlags);
-    
-    mContext = new OpenGlContext(mWindow);
-    mContext->init();
+    if (!mWindow) return false;
+    mContext->init(mWindow);
+    if (!mContext) return false;
     
     setVsync(mVsync);
     
-    return mWindow;
+    return true;
 }
 
 void Kili::Window::update()
@@ -67,8 +62,5 @@ Kili::Window::~Window()
 void Kili::Window::setVsync(const bool vsync)
 {
     mVsync = vsync;
-    
-    if constexpr (GRAPHIC_API == GraphicApi::None) LOG_WARNING("Rendering Api None does not support Vsync");
-    else if constexpr (GRAPHIC_API == GraphicApi::OpenGl) SDL_GL_SetSwapInterval(mVsync);
-    // ADDAPI
+    mContext->setVsync(mVsync);
 }

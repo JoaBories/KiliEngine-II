@@ -7,7 +7,7 @@ public:
 	~Runtime() override = default;
 };
 
-Kili::Engine* Kili::createEngine()
+Kili::Engine* Kili::CreateEngine()
 {
 	return new Runtime();
 }

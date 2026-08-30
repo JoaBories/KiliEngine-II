@@ -6,10 +6,10 @@
 Quaternion Quaternion::lerp(const Quaternion& a, const Quaternion& b, const float t)
 {
     Quaternion temp;
-    temp.x = Klm::lerp(a.x, b.x, t);
-    temp.y = Klm::lerp(a.y, b.y, t);
-    temp.z = Klm::lerp(a.z, b.z, t);
-    temp.w = Klm::lerp(a.w, b.w, t);
+    temp.x = Klm::Lerp(a.x, b.x, t);
+    temp.y = Klm::Lerp(a.y, b.y, t);
+    temp.z = Klm::Lerp(a.z, b.z, t);
+    temp.w = Klm::Lerp(a.w, b.w, t);
     temp.normalize();
     return temp;
 }
@@ -28,10 +28,10 @@ Quaternion Quaternion::slerp(const Quaternion& a, const Quaternion& b, const flo
 
     if (cosom < 0.9999f)
     {
-        const float omega = Klm::aCos(cosom);
-        const float invSin = 1.f / Klm::sin(omega);
-        scale0 = Klm::sin((1.f - t) * omega) * invSin;
-        scale1 = Klm::sin(t * omega) * invSin;
+        const float omega = Klm::ACos(cosom);
+        const float invSin = 1.f / Klm::Sin(omega);
+        scale0 = Klm::Sin((1.f - t) * omega) * invSin;
+        scale1 = Klm::Sin(t * omega) * invSin;
     }
     else
     {
@@ -79,11 +79,11 @@ const Quaternion Quaternion::Identity = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 
 Quaternion::Quaternion(const Vector3& axis, const float angle)
 {
-    const float scalar = Klm::sin(angle / 2.0f);
+    const float scalar = Klm::Sin(angle / 2.0f);
     x = axis.x * scalar;
     y = axis.y * scalar;
     z = axis.z * scalar;
-    w = Klm::cos(angle / 2.0f);
+    w = Klm::Cos(angle / 2.0f);
 }
 
 Matrix4 Quaternion::asMatrixRow() const

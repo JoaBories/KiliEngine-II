@@ -41,19 +41,19 @@ struct Matrix4
     
     [[nodiscard]] Vector3 getEulerRotation() const
     {
-        const float sy = Klm::sqrt(mat[0][0] * mat[0][0] + mat[1][0] * mat[1][0]);
+        const float sy = Klm::Sqrt(mat[0][0] * mat[0][0] + mat[1][0] * mat[1][0]);
         Vector3 temp;
 
         if (sy > 1e-6)
         {
-            temp.x = Klm::aTan2(mat[2][1], mat[2][2]);
-            temp.y = Klm::aTan2(-mat[2][0], sy);
-            temp.z = Klm::aTan2(mat[1][0], mat[0][0]);
+            temp.x = Klm::ATan2(mat[2][1], mat[2][2]);
+            temp.y = Klm::ATan2(-mat[2][0], sy);
+            temp.z = Klm::ATan2(mat[1][0], mat[0][0]);
         }
         else
         {
-            temp.x = Klm::aTan2(-mat[1][2], mat[1][1]);
-            temp.y = Klm::aTan2(-mat[2][0], sy);
+            temp.x = Klm::ATan2(-mat[1][2], mat[1][1]);
+            temp.y = Klm::ATan2(-mat[2][0], sy);
             temp.z = 0;
         }
         return temp;
@@ -86,8 +86,8 @@ struct Matrix4
         float temp[4][4] =
         {
             { 1.0f, 0.0f, 0.0f , 0.0f },
-            { 0.0f, Klm::cos(theta), -Klm::sin(theta), 0.0f },
-            { 0.0f, Klm::sin(theta), Klm::cos(theta), 0.0f },
+            { 0.0f, Klm::Cos(theta), -Klm::Sin(theta), 0.0f },
+            { 0.0f, Klm::Sin(theta), Klm::Cos(theta), 0.0f },
             { 0.0f, 0.0f, 0.0f, 1.0f },
         };
         return Matrix4(temp);
@@ -97,9 +97,9 @@ struct Matrix4
     {
         float temp[4][4] =
         {
-            { Klm::cos(theta), 0.0f, Klm::sin(theta), 0.0f },
+            { Klm::Cos(theta), 0.0f, Klm::Sin(theta), 0.0f },
             { 0.0f, 1.0f, 0.0f, 0.0f },
-            { -Klm::sin(theta), 0.0f, Klm::cos(theta), 0.0f },
+            { -Klm::Sin(theta), 0.0f, Klm::Cos(theta), 0.0f },
             { 0.0f, 0.0f, 0.0f, 1.0f },
         };
         return Matrix4(temp);
@@ -109,8 +109,8 @@ struct Matrix4
     {
         float temp[4][4] =
         {
-            { Klm::cos(theta), -Klm::sin(theta), 0.0f, 0.0f },
-            { Klm::sin(theta), Klm::cos(theta), 0.0f, 0.0f },
+            { Klm::Cos(theta), -Klm::Sin(theta), 0.0f, 0.0f },
+            { Klm::Sin(theta), Klm::Cos(theta), 0.0f, 0.0f },
             { 0.0f, 0.0f, 1.0f, 0.0f },
             { 0.0f, 0.0f, 0.0f, 1.0f },
         };
@@ -158,7 +158,7 @@ struct Matrix4
 
     static Matrix4 createPerspectiveFov(const float fovY, const float width, const float height, const float near, const float far)
     {
-        const float yScale = Klm::cot(fovY / 2.0f);
+        const float yScale = Klm::Cot(fovY / 2.0f);
         const float xScale = yScale * height / width;
         float temp[4][4] =
         {

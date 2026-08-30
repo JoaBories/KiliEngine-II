@@ -19,35 +19,35 @@ namespace Klm {
     constexpr float INFINITY_NEG = -INFINITY_POS;
 
     // Arithmetic
-    inline float min(const float a, const float b)							                { return a <= b ? a : b; }
-    inline int min(const int a, const int b)							                    { return a <= b ? a : b; }
-    inline float max(const float a, const float b)							                { return a >= b ? a : b; }
-    inline int max(const int a, const int b)							                    { return a >= b ? a : b; }
-    inline float clamp(const float value, const float lower, const float upper)             { return min(upper, max(value, lower)); }
-    inline int clamp(const int value, const int lower, const int upper)                     { return min(upper, max(value, lower)); }
+    inline float Min(const float a, const float b)							                { return a <= b ? a : b; }
+    inline int Min(const int a, const int b)							                    { return a <= b ? a : b; }
+    inline float Max(const float a, const float b)							                { return a >= b ? a : b; }
+    inline int Max(const int a, const int b)							                    { return a >= b ? a : b; }
+    inline float Clamp(const float value, const float lower, const float upper)             { return Min(upper, Max(value, lower)); }
+    inline int Clamp(const int value, const int lower, const int upper)                     { return Min(upper, Max(value, lower)); }
     
-    inline float abs(const float value)													    { return std::fabs(value); }
-    inline float sign(const float value)												    { return value > 0 ? 1.0f : value < 0 ? -1.0f : 0.0f; }
-    inline float lerp(const float a, const float b, const float t)						    { return a + (b - a) * clamp(t, 0.0f, 1.0f); }
-    inline float sqrt(const float val)													    { return std::sqrtf(val); }
-    inline float fmod(const float x, const float y)								            { return std::fmod(x, y); }
+    inline float Abs(const float value)													    { return std::fabs(value); }
+    inline float Sign(const float value)												    { return value > 0 ? 1.0f : value < 0 ? -1.0f : 0.0f; }
+    inline float Lerp(const float a, const float b, const float t)						    { return a + (b - a) * Clamp(t, 0.0f, 1.0f); }
+    inline float Sqrt(const float val)													    { return std::sqrtf(val); }
+    inline float Fmod(const float x, const float y)								            { return std::fmod(x, y); }
     
-    inline float round(const float val, const int precision = 0)
+    inline float Round(const float val, const int precision = 0)
     {
         const float power = static_cast<float>(std::pow(10, precision));
         return std::round(val * power) / power;
     }
     
-    inline bool nearZero(const float value, const double epsilon = EPSILON)				    { return abs(value) <= epsilon; }
-    inline bool nearlyEqual(const float a, const float b, const double epsilon = EPSILON)   { return nearZero(a - b, epsilon); }
+    inline bool NearZero(const float value, const double epsilon = EPSILON)				    { return Abs(value) <= epsilon; }
+    inline bool NearlyEqual(const float a, const float b, const double epsilon = EPSILON)   { return NearZero(a - b, epsilon); }
     
     // Trigonometry
-    inline float cos(const float angle)													    { return std::cosf(angle); }
-    inline float sin(const float angle)													    { return std::sinf(angle); }
-    inline float tan(const float angle)													    { return std::tanf(angle); }
-    inline float aCos(const float angle)												    { return std::acosf(angle); }
-    inline float aSin(const float angle)												    { return std::asinf(angle); }
-    inline float aTan(const float angle)												    { return std::atanf(angle); }
-    inline float aTan2(const float opposite, const float adjacent)						    { return std::atan2f(opposite, adjacent); }
-    inline float cot(const float angle)													    { return 1.0f / tan(angle); }
+    inline float Cos(const float angle)													    { return std::cosf(angle); }
+    inline float Sin(const float angle)													    { return std::sinf(angle); }
+    inline float Tan(const float angle)													    { return std::tanf(angle); }
+    inline float ACos(const float angle)												    { return std::acosf(angle); }
+    inline float ASin(const float angle)												    { return std::asinf(angle); }
+    inline float ATan(const float angle)												    { return std::atanf(angle); }
+    inline float ATan2(const float opposite, const float adjacent)						    { return std::atan2f(opposite, adjacent); }
+    inline float Cot(const float angle)													    { return 1.0f / Tan(angle); }
 };
