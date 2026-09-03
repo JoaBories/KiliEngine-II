@@ -22,3 +22,5 @@ I will update by adding, removing, or moving features during the project develop
   - [ ] Vulkan rendering
   - [ ] Multi threading
   - [ ] Support for HLSL shaders
+  - [ ] Mesh blocks
+  - [ ] Compute shaders for procedural generation

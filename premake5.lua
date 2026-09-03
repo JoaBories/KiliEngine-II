@@ -3,7 +3,7 @@
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 -- Names
-local mathlib = "KiliMathematics"
+local mathLib = "KiliMathematics"
 local glad = "Glad"
 local engine = "KiliEngine"
 local runtime = "Runtime"
@@ -20,8 +20,8 @@ workspace "KiliEngine2"
     debugdir "%{wks.location}"
 
 -- =========== Math lib
-project (mathlib)
-    location "%{prj.name}"
+project (mathLib)
+    location "projects/%{prj.name}"
     kind "StaticLib"
     language "C++"
 
@@ -29,12 +29,12 @@ project (mathlib)
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     files {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "projects/%{prj.name}/src/**.h",
+        "projects/%{prj.name}/src/**.cpp"
     }
 
     includedirs {
-        (mathlib .. "/src")
+        ("projects/" .. mathLib .. "/src")
     }
 
     cppdialect "c++17"
@@ -92,7 +92,7 @@ project (glad)
 
 -- =========== Engine    
 project (engine)
-    location "%{prj.name}"
+    location "projects/%{prj.name}"
     kind "StaticLib"
     language "C++"
 
@@ -100,16 +100,26 @@ project (engine)
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     pchheader "klpch.h"
-    pchsource "%{prj.name}/src/klpch.cpp"
+    pchsource "projects/%{prj.name}/src/klpch.cpp"
 
     files {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "projects/%{prj.name}/src/**.h",
+        "projects/%{prj.name}/src/**.cpp",
+        "premake5.lua",
+        "README.md",
+        "config/**",
+        "resources/**"
+    }
+
+    vpaths {
+        ["Resources/*"] = "resources/**",
+        ["Docs"] = { "README.md", "premake5.lua" },
+        ["Config"] = "config/**"
     }
 
     includedirs {
-        (mathlib .. "/src"),
-        (engine .. "/src"),
+        ("projects/" .. mathLib .. "/src"),
+        ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
     }
@@ -119,7 +129,7 @@ project (engine)
     }
 
     links {
-        (mathlib),
+        (mathLib),
         (glad),
         "SDL3"
     }
@@ -143,7 +153,7 @@ project (engine)
         
 -- =========== Runtime
 project (runtime)
-    location "%{prj.name}"
+    location "projects/%{prj.name}"
     kind "ConsoleApp"
     language "C++"
 
@@ -151,13 +161,13 @@ project (runtime)
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
     files {
-        "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "projects/%{prj.name}/src/**.h",
+        "projects/%{prj.name}/src/**.cpp"
     }
 
     includedirs {
-        (mathlib .. "/src"),
-        (engine .. "/src"),
+        ("projects/" .. mathLib .. "/src"),
+        ("projects/" .. engine .. "/src"),
         ("vendor/" .. glad .. "/include"),
         "vendor/Sdl3/include"
     }
@@ -167,7 +177,7 @@ project (runtime)
     }
 
     links {
-        (mathlib),
+        (mathLib),
         (engine),
         (glad),
         "Sdl3"
@@ -175,7 +185,9 @@ project (runtime)
 
     -- Used for copying SDL3 dll onto the exe folder 
     postbuildcommands { 
-        "{COPYFILE} %[vendor/Sdl3/SDL3.dll] %[%{!cfg.targetdir}]"
+        "{COPYFILE} %[vendor/Sdl3/SDL3.dll] %[%{!cfg.targetdir}]",
+        "{COPYDIR} %[resources] %[%{!cfg.targetdir}/resources]",
+        "{COPYDIR} %[config] %[%{!cfg.targetdir}/config]"
     }
 
     cppdialect "c++17"
