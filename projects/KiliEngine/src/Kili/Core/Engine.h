@@ -4,6 +4,7 @@
 #include "Kili/Window.h"
 #include "Kili/Logger/ConsoleLogger.h"
 #include "Kili/Events/Event.h"
+#include "Kili/Renderer/Shader.h"
 
 namespace Kili
 {
@@ -21,6 +22,7 @@ namespace Kili
         int mEventLogFilter;
         
         unsigned int mVertexArray, mVertexBuffer, mIndexBuffer; // Temp
+        Shader* mShaderProgram;
         
         /**
          * Init all the engine components and set them up. \n

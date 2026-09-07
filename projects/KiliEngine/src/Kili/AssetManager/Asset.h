@@ -1,18 +1,19 @@
 #pragma once
 
-class IAsset
+namespace Kili
 {
-private:
-    bool mLoaded;
+    class IAsset
+    {
+    protected:
+        bool mLoaded;
     
-public:
-    IAsset(); // Constructor is just "fetching" the asset 
-    virtual ~IAsset();
+    public:
+        IAsset() : mLoaded(false) {} // Constructor will just "fetching" the asset in subclasses
+        virtual ~IAsset() = default;
     
-    virtual bool use() = 0; // Useful for assets like shader textures and vao
-    
-    virtual bool load() = 0;
-    virtual bool unLoad() = 0;
+        virtual bool load() = 0;
+        virtual bool unload() = 0;
 
-    [[nodiscard]] bool isLoaded() const { return mLoaded; }
-};
+        [[nodiscard]] bool isLoaded() const { return mLoaded; }
+    };
+}

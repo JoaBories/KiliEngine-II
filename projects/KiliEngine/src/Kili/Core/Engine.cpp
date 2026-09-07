@@ -5,6 +5,7 @@
 
 #include "Kili/Events/InputEvent.h"
 #include "Kili/Events/WindowEvent.h"
+#include "Kili/Renderer/GraphicApi/OpenGl/OpenGlShader.h"
 
 namespace Kili
 {
@@ -163,7 +164,7 @@ namespace Kili
         glGenBuffers(1, &mVertexBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, mVertexBuffer);
 
-        float vertices[3*3] = {
+        constexpr float vertices[3*3] = {
             -0.5f, -0.5f, 0.0f,
              0.5f, -0.5f, 0.0f,
              0.0f,  0.5f, 0.0f,
@@ -176,10 +177,13 @@ namespace Kili
         
         glGenBuffers(1, &mIndexBuffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIndexBuffer);
-        
-        unsigned int indices[3] = { 0, 1, 2 };
+
+        constexpr unsigned int indices[3] = { 0, 1, 2 };
         
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        
+        mShaderProgram = new OpenGlShader("Test", {"resources/Test.vert", "resources/Test.frag"});
+        mShaderProgram->load();
         
         // Init and config time clock
         mTimeClock = new TimeClock(config.getMaxFps(), config.getMaxDeltaTime());
@@ -202,6 +206,8 @@ namespace Kili
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
+            mShaderProgram->setActive();
+            
             //render
             glBindVertexArray(mVertexArray);
             glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
@@ -214,6 +220,8 @@ namespace Kili
 
     void Engine::close()
     {
+        mShaderProgram->unload();
+        
         delete mWindow;
         mWindow = nullptr;
         

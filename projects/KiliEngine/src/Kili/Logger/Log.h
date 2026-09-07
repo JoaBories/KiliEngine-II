@@ -19,7 +19,7 @@ namespace Kili
         Error   = BIT(4),
     };
 
-    inline const char* toString(const LogLevel e)
+    inline std::string toString(const LogLevel e)
     {
         switch (e)
         {
